@@ -3,75 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CIRSOC 301-2018 — Verificador de Secciones</title>
+<title>CIRSOC 301-2018 &mdash; Verificador de Secciones</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  background: #0f1117; color: #e8edf5;
-  min-height: 100vh;
-}
-header {
-  border-bottom: 1px solid #2a3347;
-  padding: 20px 40px;
-  display: flex; align-items: baseline; gap: 16px;
-}
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f1117; color: #e8edf5; min-height: 100vh; }
+header { border-bottom: 1px solid #2a3347; padding: 20px 40px; display: flex; align-items: baseline; gap: 16px; }
 .brand { font-size: 11px; letter-spacing: 0.15em; color: #7a8aaa; text-transform: uppercase; }
 .title { font-size: 18px; font-weight: 600; }
-.copyright {
-  margin-left: auto; font-size: 11px; color: #3d4f6e; text-align: right; line-height: 1.5;
-}
+.copyright { margin-left: auto; font-size: 11px; color: #3d4f6e; text-align: right; line-height: 1.5; }
 .copyright a { color: #4a9eff; text-decoration: none; }
-
 main { max-width: 900px; margin: 0 auto; padding: 48px 40px; }
 .intro { margin-bottom: 40px; }
 .intro h2 { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
 .intro p  { font-size: 14px; color: #7a8aaa; line-height: 1.7; max-width: 560px; }
-
-.section-label {
-  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: #7a8aaa; margin-bottom: 16px;
-}
-.grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 12px; margin-bottom: 48px;
-}
-.card {
-  background: #161b27; border: 1px solid #2a3347;
-  border-radius: 10px; padding: 20px;
-  text-decoration: none; color: inherit;
-  transition: border-color 0.15s, background 0.15s;
-  display: block; cursor: pointer;
-}
+.section-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #7a8aaa; margin-bottom: 16px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 48px; }
+.card { background: #161b27; border: 1px solid #2a3347; border-radius: 10px; padding: 20px; text-decoration: none; color: inherit; transition: border-color 0.15s, background 0.15s; display: block; cursor: pointer; }
 .card:hover { background: #1e2535; border-color: #374257; }
 .card.ready:hover { border-color: #4a9eff; }
 .card.pending { opacity: 0.45; cursor: default; }
-.card-tag {
-  font-size: 10px; font-weight: 600; padding: 2px 8px;
-  border-radius: 20px; display: inline-block; margin-bottom: 10px;
-}
+.card-tag { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
 .tag-ready   { background: #0d2040; color: #4a9eff; }
 .tag-pending { background: #1e2535; color: #3d4f6e; }
 .card-title  { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
 .card-sub    { font-size: 12px; color: #7a8aaa; line-height: 1.5; margin-bottom: 12px; }
 .card-props  { display: flex; flex-wrap: wrap; gap: 4px; }
-.prop {
-  font-size: 10px; background: #0f1117; border: 1px solid #2a3347;
-  border-radius: 4px; padding: 2px 7px; color: #7a8aaa;
-}
-
-.notice {
-  background: #0d2040; border: 1px solid #1a3a6e;
-  border-radius: 8px; padding: 16px 20px;
-  font-size: 12px; color: #7a8aaa; line-height: 1.7;
-}
+.prop { font-size: 10px; background: #0f1117; border: 1px solid #2a3347; border-radius: 4px; padding: 2px 7px; color: #7a8aaa; }
+.notice { background: #0d2040; border: 1px solid #1a3a6e; border-radius: 8px; padding: 16px 20px; font-size: 12px; color: #7a8aaa; line-height: 1.7; }
 .notice strong { color: #4a9eff; }
 .notice a { color: #4a9eff; }
-
-footer {
-  border-top: 1px solid #2a3347; padding: 20px 40px;
-  font-size: 11px; color: #3d4f6e; text-align: center; line-height: 1.7;
-}
+footer { border-top: 1px solid #2a3347; padding: 20px 40px; font-size: 11px; color: #3d4f6e; text-align: center; line-height: 1.7; }
 footer a { color: #4a9eff; text-decoration: none; }
 </style>
 </head>
@@ -91,11 +52,9 @@ footer a { color: #4a9eff; text-decoration: none; }
 <main>
   <div class="intro">
     <h2>Seleccion&aacute; la tipolog&iacute;a a verificar</h2>
-    <p>
-      Verificaci&oacute;n de resistencia de dise&ntilde;o de secciones de acero seg&uacute;n
-      <strong>CIRSOC 301-2018</strong>. Seleccion&aacute; el perfil, ingres&aacute; los par&aacute;metros
-      del miembro y las solicitaciones de dise&ntilde;o.
-    </p>
+    <p>Verificaci&oacute;n de resistencia de dise&ntilde;o de secciones de acero seg&uacute;n
+    <strong>CIRSOC 301-2018</strong>. Seleccion&aacute; el perfil, ingres&aacute; los par&aacute;metros
+    del miembro y las solicitaciones de dise&ntilde;o.</p>
   </div>
 
   <div class="section-label">Tipolog&iacute;as disponibles</div>
@@ -106,12 +65,9 @@ footer a { color: #4a9eff; text-decoration: none; }
       <div class="card-title">Secci&oacute;n Doble T</div>
       <div class="card-sub">Perfiles W, HEA, HEB, IPE, IPN, HP, S, M &mdash; doblemente sim&eacute;tricos</div>
       <div class="card-props">
-        <span class="prop">367 perfiles</span>
-        <span class="prop">E.3 / E.4</span>
-        <span class="prop">F.2 / F.6</span>
-        <span class="prop">G.2 / G.6</span>
-        <span class="prop">D.2</span>
-        <span class="prop">H.1</span>
+        <span class="prop">367 perfiles</span><span class="prop">E.3 / E.4</span>
+        <span class="prop">F.2 / F.6</span><span class="prop">G.2 / G.6</span>
+        <span class="prop">D.2</span><span class="prop">H.1</span>
       </div>
     </a>
 
@@ -119,70 +75,49 @@ footer a { color: #4a9eff; text-decoration: none; }
       <span class="card-tag tag-pending">Pr&oacute;ximamente</span>
       <div class="card-title">UPN simple</div>
       <div class="card-sub">Canal laminado &mdash; eje material y eje libre</div>
-      <div class="card-props">
-        <span class="prop">12 perfiles</span>
-        <span class="prop">Grupo II</span>
-        <span class="prop">Excentricidades</span>
-      </div>
+      <div class="card-props"><span class="prop">12 perfiles</span><span class="prop">Grupo II</span><span class="prop">Excentricidades</span></div>
     </div>
 
     <div class="card pending">
       <span class="card-tag tag-pending">Pr&oacute;ximamente</span>
       <div class="card-title">2 UPN Grupo II</div>
       <div class="card-sub">Dos UPN espalda a espalda con presillas</div>
-      <div class="card-props">
-        <span class="prop">Grupo II</span>
-        <span class="prop">Presillas</span>
-      </div>
+      <div class="card-props"><span class="prop">Grupo II</span><span class="prop">Presillas</span></div>
     </div>
 
     <div class="card pending">
       <span class="card-tag tag-pending">Pr&oacute;ximamente</span>
       <div class="card-title">2 UPN Grupo V</div>
       <div class="card-sub">Dos UPN en caj&oacute;n &mdash; eje material</div>
-      <div class="card-props">
-        <span class="prop">Grupo V</span>
-        <span class="prop">Caj&oacute;n</span>
-      </div>
+      <div class="card-props"><span class="prop">Grupo V</span><span class="prop">Caj&oacute;n</span></div>
     </div>
 
     <div class="card pending">
       <span class="card-tag tag-pending">Pr&oacute;ximamente</span>
       <div class="card-title">&Aacute;ngulo Simple L</div>
-      <div class="card-sub">Secci&oacute;n angular simple &mdash; traccci&oacute;n y compresi&oacute;n</div>
-      <div class="card-props">
-        <span class="prop">28 perfiles</span>
-        <span class="prop">Eje material</span>
-      </div>
+      <div class="card-sub">Secci&oacute;n angular simple &mdash; tracci&oacute;n y compresi&oacute;n</div>
+      <div class="card-props"><span class="prop">28 perfiles</span><span class="prop">Eje material</span></div>
     </div>
 
     <div class="card pending">
       <span class="card-tag tag-pending">Pr&oacute;ximamente</span>
       <div class="card-title">2L Grupo II</div>
       <div class="card-sub">Dos &aacute;ngulos espalda a espalda</div>
-      <div class="card-props">
-        <span class="prop">Grupo II</span>
-        <span class="prop">Presillas</span>
-      </div>
+      <div class="card-props"><span class="prop">Grupo II</span><span class="prop">Presillas</span></div>
     </div>
 
     <div class="card pending">
       <span class="card-tag tag-pending">Pr&oacute;ximamente</span>
       <div class="card-title">2L en Cruz X</div>
       <div class="card-sub">Dos &aacute;ngulos en cruz &mdash; travesa&ntilde;os</div>
-      <div class="card-props">
-        <span class="prop">Cruz X</span>
-      </div>
+      <div class="card-props"><span class="prop">Cruz X</span></div>
     </div>
 
     <div class="card pending">
       <span class="card-tag tag-pending">Pr&oacute;ximamente</span>
       <div class="card-title">Tensores</div>
       <div class="card-sub">L simples y HR &mdash; tracci&oacute;n pura</div>
-      <div class="card-props">
-        <span class="prop">Tracci&oacute;n</span>
-        <span class="prop">D.2</span>
-      </div>
+      <div class="card-props"><span class="prop">Tracci&oacute;n</span><span class="prop">D.2</span></div>
     </div>
 
   </div>
@@ -193,6 +128,12 @@ footer a { color: #4a9eff; text-decoration: none; }
     memorias de c&aacute;lculo, proyectos o trabajos t&eacute;cnicos de terceros sin
     autorizaci&oacute;n escrita expresa del autor.
     Consultas y licencias: <a href="mailto:anibalmieres@gmail.com">anibalmieres@gmail.com</a>
+    <br><br>
+    <strong>Deslinde de responsabilidad:</strong> Los resultados generados por esta
+    herramienta son orientativos y no reemplazan el criterio profesional del ingeniero
+    responsable del proyecto. El autor no asume responsabilidad alguna por el uso de
+    estos resultados en proyectos, memorias de c&aacute;lculo o trabajos t&eacute;cnicos de
+    terceros sin verificaci&oacute;n independiente.
   </div>
 </main>
 

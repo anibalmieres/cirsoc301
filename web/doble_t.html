@@ -367,7 +367,7 @@ const f = x => { if (x === null || x === undefined) return 0; if (typeof x === '
 const fmt = (n, d=2) => (n == null || isNaN(n)) ? '—' : n.toFixed(d);
 const pct = n => (n*100).toFixed(1)+'%';
 
-let numCases = 2;
+let numCases = 1;
 const defaultCases = [
   { label: 'Caso 1', desc: '', Pu: 0, Muy: 0, Muz: 0, Vuz: 0, Vuy: 0, Tu: 0 },
   { label: 'Caso 2', desc: '', Pu: 0, Muy: 0, Muz: 0, Vuz: 0, Vuy: 0, Tu: 0 },
@@ -446,11 +446,14 @@ function calcular() {
   const Fu = mat === 'F24' ? 370 : 490;
   const Fr = mat === 'F24' ? 48 : 69; // MPa residual stress
 
-  const Ag = f('Ag'), g = f('g');
-  const h_total = f('h'), bf = f('bf'), tf = f('tf'), tw = f('tw'), hw = f('hw');
-  const Ix = f('Ix'), Iy = f('Iy'), Sx = f('Sx'), Sy = f('Sy');
-  const Zx = f('Zx'), Zy = f('Zy'), rx = f('rx'), ry = f('ry');
-  const J = f('J'), Cw = f('Cw');
+  // Read profile props from memory object (reliable even if details is collapsed)
+  const _p = window._perfil || {};
+  const fp = (key, fallback='') => { const v = _p[key]; return (v !== undefined && v !== null) ? parseFloat(v) : f(fallback || key); };
+  const Ag = fp('Ag'), g = fp('g');
+  const h_total = fp('h'), bf = fp('bf'), tf = fp('tf'), tw = fp('tw'), hw = fp('hw');
+  const Ix = fp('Ix'), Iy = fp('Iy'), Sx = fp('Sx'), Sy = fp('Sy');
+  const Zx = fp('Zx'), Zy = fp('Zy'), rx = fp('rx'), ry = fp('ry');
+  const J = fp('J'), Cw = fp('Cw');
   const Lx = f('Lx'), kx = f('kx'), Ly = f('Ly'), ky = f('ky');
   const Lz = f('Lz'), kz = f('kz'), Lb = f('Lb'), Cb = f('Cb');
   const cargaPos = document.getElementById('cargaPos').value;
@@ -833,9 +836,18 @@ function calcular() {
       </div>
     </div>
   `;
-  // Show PDF button after calculation
-  const pdfBtn = document.getElementById('btnPDF');
-  if (pdfBtn) { pdfBtn.style.display = 'block'; }
+  // Append PDF export button at bottom of results
+  const pdfDiv = document.createElement('div');
+  pdfDiv.style.cssText = 'margin-top:16px;text-align:right;';
+  pdfDiv.innerHTML = `<button onclick="exportarPDF()" style="
+    padding:10px 24px;background:var(--bg2);border:1px solid var(--border2);
+    border-radius:6px;color:var(--muted);font-size:12px;cursor:pointer;
+    font-family:var(--sans);transition:all 0.15s;"
+    onmouseover="this.style.color='var(--text)';this.style.borderColor='var(--blue)'"
+    onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border2)'">
+    ⬇&nbsp; Exportar informe PDF
+  </button>`;
+  document.getElementById('mainContent').appendChild(pdfDiv);
 }
 
 
@@ -885,6 +897,8 @@ function loadPerfil() {
   set('rx', p.rx); set('ry', p.ry);
   set('J', p.J); set('Cw', p.Cw);
   
+  // Store profile in memory (avoids issues with collapsed <details> inputs)
+  window._perfil = p;
   // Show badge
   document.getElementById('perfil-badge').style.display = 'block';
   checkReady();
