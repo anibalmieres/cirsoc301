@@ -2,6 +2,8 @@
 <html lang="es" translate="no">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CIRSOC 301-2018 — Verificación Doble T</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -182,7 +184,7 @@ select option { background: var(--bg3); }
 <!-- SIDEBAR -->
 <div class="sidebar">
   <div class="sidebar-header">
-    <div class="brand">CIRSOC 301 — 2018</div>
+    <div class="brand">CIRSOC 301 — 2018 <span style="font-size:9px;opacity:0.5">v1.1</span></div>
     <h1>Verificación<br>Sección Doble T</h1>
     <div class="subtitle">Perfiles W, HEA, HEB, IPN · F24 / F36</div>
     <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:10px;color:var(--muted);line-height:1.6">
@@ -943,7 +945,9 @@ function exportarPDF() {
   const header  = '<div style="font-family:Arial,sans-serif;margin-bottom:16px;border-bottom:2px solid #333;padding-bottom:10px;"><div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:0.1em">CIRSOC 301-2018</div><div style="font-size:18px;font-weight:700;color:#111">' + nombre + '</div><div style="font-size:11px;color:#444;margin-top:4px">Perfil: <strong>' + perfil + '</strong> &nbsp;|&nbsp; Material: <strong>' + mat + '</strong> &nbsp;|&nbsp; Fecha: <strong>' + fecha + '</strong></div></div>';
   const content = document.getElementById('mainContent').innerHTML;
   const printWin = window.open('', '_blank', 'width=900,height=700');
-  printWin.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>' + nombre + ' — ' + perfil + '</title><style>body{font-family:Arial,sans-serif;font-size:11px;color:#111;background:#fff;margin:20px 30px;} table{border-collapse:collapse;width:100%;font-size:10px;} td,th{padding:3px 6px;border:0.5px solid #ddd;} th{background:#f5f5f5;} .empty-state,.btn-calc,button,select,input,#btnCalc{display:none!important;} .block{border:1px solid #ccc;border-radius:4px;margin-bottom:12px;overflow:hidden;} .step-line{padding:3px 8px;margin:2px 0;font-size:10px;} .governs{background:#e8f4fd;padding:6px 10px;font-weight:700;} @media print{body{margin:10mm 15mm;} .block{page-break-inside:avoid;}}</style></head><body>' + header + disclaimer + content + '<div style="margin-top:20px;border-top:1px solid #ccc;padding-top:8px;font-size:8px;color:#888;text-align:center">© 2026 Aníbal Mieres — anibalmieres@gmail.com — CIRSOC 301-2018 v1.0.0 — ' + fecha + '</div></body></html>');
+  printWin.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache"><title>' + nombre + ' — ' + perfil + '</title><style>body{font-family:Arial,sans-serif;font-size:11px;color:#111;background:#fff;margin:20px 30px;} table{border-collapse:collapse;width:100%;font-size:10px;} td,th{padding:3px 6px;border:0.5px solid #ddd;} th{background:#f5f5f5;} .empty-state,.btn-calc,button,select,input,#btnCalc{display:none!important;} .block{border:1px solid #ccc;border-radius:4px;margin-bottom:12px;overflow:hidden;} .step-line{padding:3px 8px;margin:2px 0;font-size:10px;} .governs{background:#e8f4fd;padding:6px 10px;font-weight:700;} @media print{body{margin:10mm 15mm;} .block{page-break-inside:avoid;}}</style></head><body>' + header + disclaimer + content + '<div style="margin-top:20px;border-top:1px solid #ccc;padding-top:8px;font-size:8px;color:#888;text-align:center">© 2026 Aníbal Mieres — anibalmieres@gmail.com — CIRSOC 301-2018 v1.0.0 — ' + fecha + '</div></body></html>');
   printWin.document.close();
   setTimeout(function(){ printWin.focus(); printWin.print(); }, 500);
 }
@@ -1071,7 +1075,9 @@ function exportarPDF() {
   const win = window.open('', '_blank');
   if (!win) { alert('Habilitá ventanas emergentes para exportar.'); return; }
   win.document.write(
-    '<!DOCTYPE html><html><head><meta charset="UTF-8">'
+    '<!DOCTYPE html><html><head><meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">'
     + '<title>' + nombre + ' \u2014 ' + perfil + '</title>'
     + '<style>' + css + '</style>'
     + '</head><body>'
