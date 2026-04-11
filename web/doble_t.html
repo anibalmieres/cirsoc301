@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CIRSOC 301-2018 — Verificación Doble T | A. Mieres</title>
+<title>CIRSOC 301-2018 — Verificación Doble T</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -185,9 +185,7 @@ select option { background: var(--bg3); }
       <a href="mailto:anibalmieres@gmail.com" style="color:var(--blue);text-decoration:none">anibalmieres@gmail.com</a>
     </div>
     <div style="margin-top:6px;">
-      <a href="index.html" style="font-size:10px;color:var(--muted);text-decoration:none;">
-        ← Volver al inicio
-      </a>
+      <a href="index.html" style="font-size:10px;color:var(--muted);text-decoration:none;">← Volver al inicio</a>
     </div>
   </div>
 
@@ -199,9 +197,10 @@ select option { background: var(--bg3); }
     <div class="form-body">
       <div class="field-group">
         <label>Material</label>
-        <select id="mat" onchange="updateMaterial()">
+        <select id="mat" onchange="updateMaterial();checkReady()">
+          <option value="" selected disabled>— Seleccionar material —</option>
           <option value="F24">F24 · Fy=235 MPa · Fu=370 MPa</option>
-          <option value="F36" selected>F36 · Fy=355 MPa · Fu=490 MPa</option>
+          <option value="F36">F36 · Fy=355 MPa · Fu=490 MPa</option>
         </select>
       </div>
       <div style="margin-bottom:10px;">
@@ -277,19 +276,19 @@ select option { background: var(--bg3); }
     </div>
     <div class="form-body">
       <div class="field-row">
-        <div><label>Lx (cm)</label><input type="number" id="Lx" value="388.5" step="0.5"></div>
-        <div><label>kx</label><input type="number" id="kx" value="2.5" step="0.05"></div>
+        <div><label>Lx (cm)</label><input type="number" id="Lx" onchange="checkReady()" value="" step="0.5"></div>
+        <div><label>kx</label><input type="number" id="kx" onchange="checkReady()" value="" step="0.05"></div>
       </div>
       <div class="field-row">
-        <div><label>Ly (cm)</label><input type="number" id="Ly" value="480" step="0.5"></div>
-        <div><label>ky</label><input type="number" id="ky" value="1.0" step="0.05"></div>
+        <div><label>Ly (cm)</label><input type="number" id="Ly" onchange="checkReady()" value="" step="0.5"></div>
+        <div><label>ky</label><input type="number" id="ky" onchange="checkReady()" value="" step="0.05"></div>
       </div>
       <div class="field-row">
-        <div><label>Lz (cm)</label><input type="number" id="Lz" value="480" step="0.5"></div>
-        <div><label>kz</label><input type="number" id="kz" value="1.0" step="0.05"></div>
+        <div><label>Lz (cm)</label><input type="number" id="Lz" onchange="checkReady()" value="" step="0.5"></div>
+        <div><label>kz</label><input type="number" id="kz" onchange="checkReady()" value="" step="0.05"></div>
       </div>
       <div class="field-row">
-        <div><label>Lb (cm)</label><input type="number" id="Lb" value="480" step="0.5"></div>
+        <div><label>Lb (cm)</label><input type="number" id="Lb" onchange="checkReady()" value="" step="0.5"></div>
         <div><label>Cb</label><input type="number" id="Cb" value="1.0" step="0.05"></div>
       </div>
       <div class="field-group">
@@ -338,7 +337,17 @@ select option { background: var(--bg3); }
     </div>
   </div>
 
-  <button class="btn-calc" onclick="calcular()">▶  Calcular verificación</button>
+  
+  <button onclick="exportarPDF()" style="
+    margin:0 20px 8px;width:calc(100% - 40px);padding:8px;
+    background:transparent;border:1px solid var(--border2);border-radius:6px;
+    color:var(--muted);font-size:11px;cursor:pointer;font-family:var(--sans);
+    transition:all 0.15s;"
+    onmouseover="this.style.color='var(--text)';this.style.borderColor='var(--blue)'"
+    onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border2)'">
+    ⬇ Exportar informe PDF
+  </button>
+  <button class="btn-calc" id="btnCalc" onclick="calcular()" disabled style="opacity:0.4;cursor:not-allowed;">▶  Calcular verificación</button>
 </div>
 
 <!-- MAIN -->
@@ -426,6 +435,13 @@ buildCases();
 // ── MAIN CALCULATION ────────────────────────────────────────────────────────
 function calcular() {
   const mat = document.getElementById('mat').value;
+  const perfilNombre = document.getElementById('selPerfil').value;
+  if (!perfilNombre || !mat) {
+    document.getElementById('mainContent').innerHTML = `
+      <div class="empty-state"><div class="icon">⊞</div>
+      <p>Seleccioná un <strong>perfil</strong> y un <strong>material</strong><br>para calcular.</p></div>`;
+    return;
+  }
   const Fy = mat === 'F24' ? 235 : 355;
   const Fu = mat === 'F24' ? 370 : 490;
   const Fr = mat === 'F24' ? 48 : 69; // MPa residual stress
@@ -663,8 +679,8 @@ function calcular() {
   main.innerHTML = `
     <div class="results-header">
       <div>
-        <div class="results-title">Verificación Sección Doble T</div>
-        <div class="results-subtitle">CIRSOC 301-2018 · ${mat} · ${numCases} caso${numCases>1?'s':''} de carga · © 2026 A. Mieres</div>
+        <div class="results-title">${document.getElementById('nombreVerif').value.trim() || 'Verificación Sección Doble T'}</div>
+        <div class="results-subtitle">CIRSOC 301-2018 · ${mat} · ${numCases} caso${numCases>1?'s':''} de carga</div>
       </div>
       <span class="status-badge ${allPass ? 'status-ok' : 'status-fail'}">${allPass ? '✓ TODOS VERIFICAN' : '✗ NO VERIFICA'}</span>
     </div>
@@ -817,6 +833,9 @@ function calcular() {
       </div>
     </div>
   `;
+  // Show PDF button after calculation
+  const pdfBtn = document.getElementById('btnPDF');
+  if (pdfBtn) { pdfBtn.style.display = 'block'; }
 }
 
 
@@ -868,6 +887,7 @@ function loadPerfil() {
   
   // Show badge
   document.getElementById('perfil-badge').style.display = 'block';
+  checkReady();
   document.getElementById('perfil-badge-name').textContent = nombre;
   
   // Show props summary grid
@@ -888,6 +908,107 @@ function loadPerfil() {
     </div>`).join('');
 }
 
+
+
+function exportarPDF() {
+  const perfil  = document.getElementById('selPerfil').value || '—';
+  const mat     = document.getElementById('mat').value || '—';
+  const nombre  = document.getElementById('nombreVerif').value.trim() || 'Verificación Sección Doble T';
+  const fecha   = new Date().toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit',year:'numeric'});
+
+  const disclaimer = `
+    <div style="font-family:Arial,sans-serif;font-size:9px;color:#555;
+                border:1px solid #ccc;border-radius:4px;padding:10px 14px;
+                margin-bottom:16px;line-height:1.6;background:#fafafa;">
+      <strong style="color:#333">© 2026 Aníbal Mieres — anibalmieres@gmail.com</strong><br>
+      CIRSOC 301-2018 Verificador de Secciones de Acero — v1.0.0<br><br>
+      <strong>Aviso de uso y deslinde de responsabilidad:</strong><br>
+      Este informe fue generado por una herramienta de uso exclusivo de su autor.
+      Los resultados son orientativos y no reemplazan el criterio profesional del
+      ingeniero responsable del proyecto. El autor no asume responsabilidad por el
+      uso de estos resultados en proyectos de terceros sin verificación independiente.
+      Queda prohibida la reproducción o uso de este documento en memorias de cálculo,
+      proyectos o trabajos técnicos de terceros sin autorización escrita expresa del autor.
+    </div>`;
+
+  const header = `
+    <div style="font-family:Arial,sans-serif;margin-bottom:16px;
+                border-bottom:2px solid #333;padding-bottom:10px;">
+      <div style="font-size:11px;color:#666;text-transform:uppercase;
+                  letter-spacing:0.1em">CIRSOC 301-2018</div>
+      <div style="font-size:18px;font-weight:700;color:#111">
+        ${nombre}</div>
+      <div style="font-size:11px;color:#444;margin-top:4px">
+        Perfil: <strong>${perfil}</strong> &nbsp;|&nbsp;
+        Material: <strong>${mat}</strong> &nbsp;|&nbsp;
+        Fecha: <strong>${fecha}</strong>
+      </div>
+    </div>`;
+
+  const content = document.getElementById('mainContent').innerHTML;
+
+  const printWin = window.open('', '_blank', 'width=900,height=700');
+  printWin.document.write(`
+    <!DOCTYPE html><html><head>
+    <meta charset="UTF-8">
+    <title>${nombre} — ${perfil} - CIRSOC 301-2018</title>
+    <style>
+      body { font-family: Arial, sans-serif; font-size: 11px; color: #111;
+             background: #fff; margin: 20px 30px; }
+      .empty-state { display: none; }
+      table { border-collapse: collapse; width: 100%; font-size: 10px; }
+      td, th { padding: 3px 6px; border: 0.5px solid #ddd; }
+      th { background: #f5f5f5; }
+      .block { border: 1px solid #ccc; border-radius: 4px;
+               margin-bottom: 12px; overflow: hidden; }
+      .block-header { background: #333; color: #fff; padding: 6px 10px;
+                      font-size: 11px; font-weight: 700; }
+      .step-pass { border-left: 3px solid #2d6a4f; background: #f8fff8; }
+      .step-fail { border-left: 3px solid #c1121f; background: #fff8f8; }
+      .step-info { border-left: 3px solid #1a5fa8; }
+      .step-line { padding: 3px 8px; margin: 2px 0; font-size: 10px; }
+      .governs   { background: #e8f4fd; padding: 6px 10px;
+                   font-weight: 700; font-size: 11px; }
+      .case-result { border: 1px solid #ccc; border-radius: 4px;
+                     padding: 8px; margin: 6px 0; display: inline-block;
+                     width: 48%; vertical-align: top; }
+      .ratio-bar, .sidebar, .btn-calc, button, select, input { display: none !important; }
+      @media print {
+        body { margin: 10mm 15mm; }
+        .block { page-break-inside: avoid; }
+      }
+    </style>
+    </head><body>
+    ${header}
+    ${disclaimer}
+    ${content}
+    <div style="margin-top:20px;border-top:1px solid #ccc;padding-top:8px;
+                font-size:8px;color:#888;text-align:center">
+      © 2026 Aníbal Mieres — anibalmieres@gmail.com —
+      CIRSOC 301-2018 Verificador de Secciones v1.0.0 —
+      Generado el ${fecha}
+    </div>
+    </body></html>`);
+  printWin.document.close();
+  setTimeout(() => { printWin.focus(); printWin.print(); }, 500);
+}
+
+function checkReady() {
+  const ok = document.getElementById('selPerfil').value &&
+             document.getElementById('mat').value &&
+             parseFloat(document.getElementById('Lx').value) > 0 &&
+             parseFloat(document.getElementById('Ly').value) > 0 &&
+             parseFloat(document.getElementById('Lz').value) > 0 &&
+             parseFloat(document.getElementById('Lb').value) > 0 &&
+             parseFloat(document.getElementById('kx').value) > 0 &&
+             parseFloat(document.getElementById('ky').value) > 0 &&
+             parseFloat(document.getElementById('kz').value) > 0;
+  const btn = document.getElementById('btnCalc');
+  btn.disabled = !ok;
+  btn.style.opacity = ok ? '1' : '0.4';
+  btn.style.cursor  = ok ? 'pointer' : 'not-allowed';
+}
+
 function clearBadge() {
   document.getElementById('perfil-badge').style.display = 'none';
   document.getElementById('selPerfil').value = '';
@@ -899,7 +1020,6 @@ filterPerfiles();
 
 // init
 filterPerfiles();
-calcular();
 </script>
 </body>
 </html>
