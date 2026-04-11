@@ -58,7 +58,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); font
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
 .field-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 8px; }
 label { display: block; font-size: 10px; color: var(--muted); margin-bottom: 3px; letter-spacing: 0.04em; }
-input[type=number], select {
+input[type=number], input[type=text], select {
   width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px;
   color: var(--text); font-family: var(--mono); font-size: 12px; padding: 6px 8px;
   outline: none; transition: border-color 0.15s;
@@ -185,7 +185,7 @@ select option { background: var(--bg3); }
     <div class="subtitle">Perfiles W, HEA, HEB, IPN · F24 / F36</div>
     <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:10px;color:var(--muted);line-height:1.6">
       © 2026 Aníbal Mieres<br>
-      <a href="mailto:anibalmieres@gmail.com" style="color:var(--blue);text-decoration:none">anibalmieres@gmail.com</a>
+      <a href="/cdn-cgi/l/email-protection#cbaaa5a2a9aaa7a6a2aeb9aeb88baca6aaa2a7e5a8a4a6" style="color:var(--blue);text-decoration:none"><span class="__cf_email__" data-cfemail="34555a5d565558595d51465147745359555d581a575b59">[email&#160;protected]</span></a>
     </div>
     <div style="margin-top:6px;">
       <a href="index.html" style="font-size:10px;color:var(--muted);text-decoration:none;">← Volver al inicio</a>
@@ -279,20 +279,20 @@ select option { background: var(--bg3); }
     </div>
     <div class="form-body">
       <div class="field-row">
-        <div><label>Lx (cm)</label><input type="number" id="Lx" onchange="checkReady()" value="" step="0.5"></div>
-        <div><label>kx</label><input type="number" id="kx" onchange="checkReady()" value="" step="0.05"></div>
+        <div><label>Lx (cm)</label><input type="text" inputmode="decimal" id="Lx" onchange="checkReady()" value="" step="0.5"></div>
+        <div><label>kx</label><input type="text" inputmode="decimal" id="kx" onchange="checkReady()" value="" step="0.05"></div>
       </div>
       <div class="field-row">
-        <div><label>Ly (cm)</label><input type="number" id="Ly" onchange="checkReady()" value="" step="0.5"></div>
-        <div><label>ky</label><input type="number" id="ky" onchange="checkReady()" value="" step="0.05"></div>
+        <div><label>Ly (cm)</label><input type="text" inputmode="decimal" id="Ly" onchange="checkReady()" value="" step="0.5"></div>
+        <div><label>ky</label><input type="text" inputmode="decimal" id="ky" onchange="checkReady()" value="" step="0.05"></div>
       </div>
       <div class="field-row">
-        <div><label>Lz (cm)</label><input type="number" id="Lz" onchange="checkReady()" value="" step="0.5"></div>
-        <div><label>kz</label><input type="number" id="kz" onchange="checkReady()" value="" step="0.05"></div>
+        <div><label>Lz (cm)</label><input type="text" inputmode="decimal" id="Lz" onchange="checkReady()" value="" step="0.5"></div>
+        <div><label>kz</label><input type="text" inputmode="decimal" id="kz" onchange="checkReady()" value="" step="0.05"></div>
       </div>
       <div class="field-row">
-        <div><label>Lb (cm)</label><input type="number" id="Lb" onchange="checkReady()" value="" step="0.5"></div>
-        <div><label>Cb</label><input type="number" id="Cb" value="1.0" step="0.05"></div>
+        <div><label>Lb (cm)</label><input type="text" inputmode="decimal" id="Lb" onchange="checkReady()" value="" step="0.5"></div>
+        <div><label>Cb</label><input type="text" inputmode="decimal" id="Cb" onchange="checkReady()" value="" step="0.05"></div>
       </div>
       <div class="field-group">
         <label>Posición de carga aplicada</label>
@@ -360,7 +360,7 @@ select option { background: var(--bg3); }
 </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── Constants ──────────────────────────────────────────────────────────────
 const E = 200000, G = 77200;
 const PI = Math.PI;
@@ -405,7 +405,7 @@ function buildCases() {
       <div class="field-group"><label>Descripción</label><input type="text" id="cd${i}" value="${d.desc}" style="font-family:var(--sans);font-size:12px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;width:100%;outline:none;"></div>
       <div class="field-row">
         <div><label>Pu (kN)</label><input type="number" id="pu${i}" value="${d.Pu}" step="0.01"></div>
-        <div><label>Tu (kNm)</label><input type="number" id="tu${i}" value="${d.Tu}" step="0.01"></div>
+        <div><label>Tu (kNm) <span style="font-size:9px;color:var(--muted)">(no verif.)</span></label><input type="number" id="tu${i}" value="${d.Tu}" step="0.01"></div>
       </div>
       <div class="field-row">
         <div><label>Muy (kNm) — eje fuerte</label><input type="number" id="muy${i}" value="${d.Muy}" step="0.01"></div>
@@ -826,7 +826,7 @@ function calcular() {
     <div class="block">
       <div class="block-header">
         <span class="block-tag" style="background:var(--purple-bg);color:var(--purple)">H.1 / G.7</span>
-        <span class="block-title">Verificaciones combinadas por caso de carga</span>
+        <span class="block-title">Verificaciones combinadas por caso de carga</span><span style="font-size:10px;color:var(--muted);margin-left:8px;font-weight:400">Tu ingresado pero no verificado (§H.3 pendiente)</span>
         <span class="status-badge ${allPass?'status-ok':'status-fail'}" style="font-size:11px">${allPass?'✓ OK':'✗ FALLA'}</span>
       </div>
       <div class="block-body">
@@ -1112,7 +1112,8 @@ function checkReady() {
              (parseFloat(document.getElementById('Lb').value) || 0) > 0 &&
              (parseFloat(document.getElementById('kx').value) || 0) > 0 &&
              (parseFloat(document.getElementById('ky').value) || 0) > 0 &&
-             (parseFloat(document.getElementById('kz').value) || 0) > 0;
+             (parseFloat(document.getElementById('kz').value) || 0) > 0 &&
+             (parseFloat(document.getElementById('Cb').value.replace(',','.')) || 0) > 0;
   const btn = document.getElementById('btnCalc');
   if (btn) {
     btn.disabled = !ok;
@@ -1120,7 +1121,7 @@ function checkReady() {
     btn.style.cursor = ok ? 'pointer' : 'not-allowed';
   }
   // Green border when field is valid
-  ['Lx','Ly','Lz','Lb','kx','ky','kz'].forEach(id => {
+  ['Lx','Ly','Lz','Lb','kx','ky','kz','Cb'].forEach(id => {
     const el = document.getElementById(id);
     if (!el || el.value === '') { el.style.borderColor = ''; return; }
     const v = parseFloat(el.value) || 0;
@@ -1147,11 +1148,4 @@ filterPerfiles();
     console.error('INIT ERROR:', e);
     // Show error visibly on page
     var errDiv = document.createElement('div');
-    errDiv.style.cssText = 'position:fixed;top:10px;left:50%;transform:translateX(-50%);background:#c1121f;color:white;padding:12px 20px;border-radius:6px;z-index:9999;font-size:13px;max-width:600px;';
-    errDiv.textContent = 'Error de inicialización: ' + e.message + ' (línea ' + e.lineNumber + ')';
-    document.body.appendChild(errDiv);
-  }
-})();
-</script>
-</body>
-</html>
+    errDiv.style.cssText = 'position:fixed;top:10px;left:50%;transform:translateX(-50%);background:#c1121f;color:white;padding:12p
