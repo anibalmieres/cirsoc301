@@ -15,6 +15,17 @@
 # Cubre: Clasificación B.4-1 / E.3 / E.4 / F.2 / F.6 / G.2 / G.6 / D.2 /
 #        J.4.3 / H.1-1a / H.1-1b / G.7
 #
+# CONVENCIÓN DE EJES (CIRSOC 301-2018):
+#   x-x = eje fuerte (Ix mayor)   y-y = eje débil (Iy menor)
+#   Mdx (F.2) = flexión eje fuerte    Mdy (F.6) = flexión eje débil
+#   Vdy (G.2) = corte alma, por flexión eje fuerte
+#   Vdx (G.6) = corte alas, por flexión eje débil
+#
+# EQUIVALENCIA CON PROGRAMAS:
+#   STAAD: eje fuerte = z, eje débil = y
+#   Robot: eje fuerte = y, eje débil = z
+#   OpenSees: eje fuerte = y, eje débil = z
+#
 # Todas las funciones son puras (sin estado global, sin UI).
 # Devuelven objetos BloqueResultado para trazabilidad completa.
 #
@@ -71,10 +82,10 @@ class Material:
 @dataclass
 class InputsEstructurales:
     """Parámetros geométrico-estructurales del miembro (no del perfil)."""
-    Lx:  float          # cm  longitud de pandeo eje fuerte
-    kx:  float          # —   coeficiente eje fuerte
-    Ly:  float          # cm  longitud de pandeo eje débil
-    ky:  float          # —   coeficiente eje débil
+    Lx:  float          # cm  longitud de pandeo eje fuerte (x-x)
+    kx:  float          # —   coeficiente eje fuerte (x-x)
+    Ly:  float          # cm  longitud de pandeo eje débil (y-y)
+    ky:  float          # —   coeficiente eje débil (y-y)
     Lz:  float          # cm  longitud de pandeo torsional
     kz:  float          # —   coeficiente torsional
     Lb:  float          # cm  distancia entre puntos de arriostramiento lateral
@@ -118,15 +129,15 @@ class CasoCarga:
     """
     Solicitaciones de diseño para un caso de carga.
     Convención: Pu(+) = tracción, Pu(-) = compresión.
-    Eje fuerte = y-y → Muy, Vuz | Eje débil = z-z → Muz, Vuy
+    Eje fuerte = x-x → Muf, Vuf | Eje débil = y-y → Mud, Vud
     """
     label: str
     desc:  str
     Pu:    float = 0.0   # kN    axial
-    Muy:   float = 0.0   # kNm   flexión eje fuerte
-    Muz:   float = 0.0   # kNm   flexión eje débil
-    Vuz:   float = 0.0   # kN    corte eje fuerte
-    Vuy:   float = 0.0   # kN    corte eje débil
+    Muf:   float = 0.0   # kNm   flexión eje fuerte (x-x)
+    Mud:   float = 0.0   # kNm   flexión eje débil (y-y)
+    Vuf:   float = 0.0   # kN    cortante eje fuerte — alma (Vdy, §G.2)
+    Vud:   float = 0.0   # kN    cortante eje débil — alas (Vdx, §G.6)
     Tu:    float = 0.0   # kNm   torsión (informativo)
 
 
@@ -391,9 +402,9 @@ def flexion_eje_debil(p: PerfilDobleT, mat: Material,
 # ══════════════════════════════════════════════════════════════════════════════
 
 def corte_eje_fuerte(p: PerfilDobleT, mat: Material) -> BloqueResultado:
-    b = BloqueResultado(titulo="Corte — eje fuerte (alma)",
+    b = BloqueResultado(titulo="Corte — eje fuerte, alma (§G.2) → Vdy",
                         referencia="CIRSOC 301-2018 §G.2",
-                        simbolo="Vdz", unidad="kN")
+                        simbolo="Vdy", unidad="kN")
     φv  = 0.9
     Aw  = p.h * p.tw
     kv  = 5.0
@@ -415,7 +426,7 @@ def corte_eje_fuerte(p: PerfilDobleT, mat: Material) -> BloqueResultado:
     Vn = 0.6 * mat.Fy * Aw * Cv * 1e-1
     Vd = φv * Vn
     b.agregar("Vn = 0.6·Fy·Aw·Cv·10⁻¹", f"0.6·{mat.Fy}·{Aw:.3f}·{Cv:.3f}·10⁻¹", Vn, "kN", None, None, "G.2-1")
-    b.agregar("Vdz = 0.9·Vn",            f"0.9·{Vn:.3f}", Vd, "kN")
+    b.agregar("Vdy = 0.9·Vn",            f"0.9·{Vn:.3f}", Vd, "kN")
 
     b.valor    = Vd
     b.verifica = True
@@ -428,9 +439,9 @@ def corte_eje_fuerte(p: PerfilDobleT, mat: Material) -> BloqueResultado:
 # ══════════════════════════════════════════════════════════════════════════════
 
 def corte_eje_debil(p: PerfilDobleT, mat: Material) -> BloqueResultado:
-    b = BloqueResultado(titulo="Corte — eje débil (alas)",
+    b = BloqueResultado(titulo="Corte — eje débil, alas (§G.6) → Vdx",
                         referencia="CIRSOC 301-2018 §G.6",
-                        simbolo="Vdy", unidad="kN")
+                        simbolo="Vdx", unidad="kN")
     φv  = 0.9
     Aw  = p.bf * p.tf
     kv  = 1.2
@@ -452,7 +463,7 @@ def corte_eje_debil(p: PerfilDobleT, mat: Material) -> BloqueResultado:
     Vn = 0.6 * mat.Fy * Aw * Cv * 1e-1
     Vd = φv * Vn
     b.agregar("Vn = 0.6·Fy·Aw·Cv·10⁻¹", f"0.6·{mat.Fy}·{Aw:.3f}·{Cv:.3f}·10⁻¹", Vn, "kN", None, None, "G.2-1")
-    b.agregar("Vdy = 0.9·Vn",            f"0.9·{Vn:.3f}", Vd, "kN")
+    b.agregar("Vdx = 0.9·Vn",            f"0.9·{Vn:.3f}", Vd, "kN")
 
     b.valor    = Vd
     b.verifica = True
@@ -557,40 +568,45 @@ def traccion_axial(p: PerfilDobleT, mat: Material,
 def verificar_caso(caso: CasoCarga,
                    Pd_comp: float, Pd_tract: float,
                    Mdx: float, Mdy: float,
-                   Vdz: float, Vdy: float) -> dict:
-    """Verifica H.1-1 y G.7-1 para un caso de carga. Devuelve dict con trazabilidad."""
+                   Vdy: float, Vdx: float) -> dict:
+    """Verifica H.1-1 y G.7-1 para un caso de carga.
+    Convención: Muf/Vuf = eje fuerte, Mud/Vud = eje débil.
+    Vdy (G.2) resiste Vuf (alma). Vdx (G.6) resiste Vud (alas).
+    """
     Pu        = caso.Pu
     fPn       = Pd_comp if Pu <= 0 else Pd_tract
     tipo_ax   = "compresión" if Pu <= 0 else "tracción"
     ratio_ax  = abs(Pu) / fPn if fPn > 0 else 0
 
     # G.7 interacción momento-corte
-    actG7z = (abs(caso.Vuz) >= 0.6*Vdz) and (abs(caso.Muy) >= 0.75*Mdx)
-    ratG7z = (abs(caso.Muy)/Mdx + 0.625*abs(caso.Vuz)/Vdz) if actG7z else None
-    actG7y = (abs(caso.Vuy) >= 0.6*Vdy) and (abs(caso.Muz) >= 0.75*Mdy)
-    ratG7y = (abs(caso.Muz)/Mdy + 0.625*abs(caso.Vuy)/Vdy) if actG7y else None
+    # Vuf (cortante alma) vs Vdy (G.2) — eje fuerte
+    actG7f = (abs(caso.Vuf) >= 0.6*Vdy) and (abs(caso.Muf) >= 0.75*Mdx)
+    ratG7f = (abs(caso.Muf)/Mdx + 0.625*abs(caso.Vuf)/Vdy) if actG7f else None
+    # Vud (cortante alas) vs Vdx (G.6) — eje débil
+    actG7d = (abs(caso.Vud) >= 0.6*Vdx) and (abs(caso.Mud) >= 0.75*Mdy)
+    ratG7d = (abs(caso.Mud)/Mdy + 0.625*abs(caso.Vud)/Vdx) if actG7d else None
 
     # H.1
-    rMy = abs(caso.Muy) / Mdx if Mdx > 0 else 0
-    rMz = abs(caso.Muz) / Mdy if Mdy > 0 else 0
+    rMf = abs(caso.Muf) / Mdx if Mdx > 0 else 0   # eje fuerte
+    rMd = abs(caso.Mud) / Mdy if Mdy > 0 else 0   # eje débil
 
     if ratio_ax >= 0.2:
-        ratio_H1 = ratio_ax + (8/9) * (rMy + rMz);  formula = "H.1-1a"
+        ratio_H1 = ratio_ax + (8/9) * (rMf + rMd);  formula = "H.1-1a"
     else:
-        ratio_H1 = ratio_ax / 2 + (rMy + rMz);       formula = "H.1-1b"
+        ratio_H1 = ratio_ax / 2 + (rMf + rMd);       formula = "H.1-1b"
 
     verifica = (ratio_H1 <= 1.0
-                and (ratG7z is None or ratG7z <= 1.375)
-                and (ratG7y is None or ratG7y <= 1.375))
+                and (ratG7f is None or ratG7f <= 1.375)
+                and (ratG7d is None or ratG7d <= 1.375))
 
     return dict(label=caso.label, desc=caso.desc,
-                Pu=Pu, Muy=caso.Muy, Muz=caso.Muz,
-                Vuz=caso.Vuz, Vuy=caso.Vuy,
+                Pu=Pu, Muf=caso.Muf, Mud=caso.Mud,
+                Vuf=caso.Vuf, Vud=caso.Vud,
                 tipo_axial=tipo_ax, fPn=fPn,
-                ratio_ax=ratio_ax, rMy=rMy, rMz=rMz,
+                ratio_ax=ratio_ax, rMf=rMf, rMd=rMd,
                 ratio_H1=ratio_H1, formula=formula,
-                activa_G7z=actG7z, ratio_G7z=ratG7z,
-                activa_G7y=actG7y, ratio_G7y=ratG7y,
+                activa_G7f=actG7f, ratio_G7f=ratG7f,
+                activa_G7d=actG7d, ratio_G7d=ratG7d,
                 ratio=ratio_H1, verifica=verifica)
 
 
@@ -651,8 +667,8 @@ def verificar_doblet(perfil:   PerfilDobleT,
             Pd_tract = blq_tr.valor,
             Mdx      = blq_fx.valor,
             Mdy      = blq_fy.valor,
-            Vdz      = blq_vz.valor,
-            Vdy      = blq_vy.valor,
+            Vdy      = blq_vz.valor,   # G.2 alma → resiste Vuf (eje fuerte)
+            Vdx      = blq_vy.valor,   # G.6 alas → resiste Vud (eje débil)
         ))
 
     return res

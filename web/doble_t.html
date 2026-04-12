@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" translate="no">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -169,9 +169,7 @@ select option { background: var(--bg3); }
   .resist-grid { grid-template-columns: repeat(2, 1fr); }
   .cases-grid { grid-template-columns: 1fr; }
 }
-
-  /* Force decimal point in number inputs */
-  input[type=number] { -moz-appearance: textfield; }
+.field-ok{border-color:#1d9e75!important}.field-err{border-color:#c1121f!important}
 </style>
 </head>
 <body>
@@ -183,12 +181,12 @@ select option { background: var(--bg3); }
     <div class="brand">CIRSOC 301 — 2018</div>
     <h1>Verificación<br>Sección Doble T</h1>
     <div class="subtitle">Perfiles W, HEA, HEB, IPN · F24 / F36</div>
-    <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:10px;color:var(--muted);line-height:1.6">
-      © 2026 Aníbal Mieres<br>
-      <a href="/cdn-cgi/l/email-protection#cbaaa5a2a9aaa7a6a2aeb9aeb88baca6aaa2a7e5a8a4a6" style="color:var(--blue);text-decoration:none"><span class="__cf_email__" data-cfemail="34555a5d565558595d51465147745359555d581a575b59">[email&#160;protected]</span></a>
+    <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:10px;color:var(--muted);line-height:1.8">
+      &copy; 2026 An&iacute;bal Mieres<br>
+      <span style="color:var(--blue)">anibalmieres [arroba] gmail.com</span>
     </div>
-    <div style="margin-top:6px;">
-      <a href="index.html" style="font-size:10px;color:var(--muted);text-decoration:none;">← Volver al inicio</a>
+    <div style="margin-top:4px;">
+      <a href="index.html" style="font-size:10px;color:var(--muted);text-decoration:none;">&#8592; Volver al inicio</a>
     </div>
   </div>
 
@@ -279,7 +277,63 @@ select option { background: var(--bg3); }
     </div>
     <div class="form-body">
       <div class="field-row">
-        <div><label>Lx (cm)</label><input type="text" inputmode="decimal" id="Lx" onchange="checkReady()" value="" step="0.5"></div>
+        <div>
+<div style="margin:0 20px 16px;">
+  <div style="font-size:10px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">Convención de ejes</div>
+  <svg width="100%" viewBox="0 0 420 260" style="display:block;">
+    <defs>
+      <marker id="axarrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    <!-- Perfil doble T -->
+    <rect x="74" y="60" width="112" height="14" rx="2" fill="var(--text)" opacity="0.08" stroke="var(--text)" stroke-width="1.2" stroke-opacity="0.5"/>
+    <rect x="122" y="74" width="16" height="72" rx="1" fill="var(--text)" opacity="0.08" stroke="var(--text)" stroke-width="1.2" stroke-opacity="0.5"/>
+    <rect x="74" y="146" width="112" height="14" rx="2" fill="var(--text)" opacity="0.08" stroke="var(--text)" stroke-width="1.2" stroke-opacity="0.5"/>
+    <!-- Eje x fuerte -->
+    <line x1="28" y1="120" x2="74" y2="120" stroke="#EF9F27" stroke-width="1.6" marker-end="url(#axarrow)" opacity="0.9"/>
+    <line x1="186" y1="120" x2="236" y2="120" stroke="#EF9F27" stroke-width="1.6" marker-end="url(#axarrow)" opacity="0.9"/>
+    <text x="242" y="116" font-family="var(--sans)" font-size="13" font-weight="500" fill="#EF9F27">x</text>
+    <text x="242" y="130" font-family="var(--sans)" font-size="10" fill="#EF9F27">eje fuerte</text>
+    <!-- Eje y débil -->
+    <line x1="130" y1="218" x2="130" y2="38" stroke="#378ADD" stroke-width="1.6" marker-end="url(#axarrow)" opacity="0.9"/>
+    <text x="130" y="30" text-anchor="middle" font-family="var(--sans)" font-size="13" font-weight="500" fill="#378ADD">y</text>
+    <text x="130" y="234" text-anchor="middle" font-family="var(--sans)" font-size="10" fill="#378ADD">eje débil</text>
+    <!-- Eje z longitudinal -->
+    <circle cx="130" cy="120" r="7" fill="none" stroke="#1D9E75" stroke-width="1.6" opacity="0.9"/>
+    <circle cx="130" cy="120" r="2.5" fill="#1D9E75" opacity="0.9"/>
+    <text x="130" y="142" text-anchor="middle" font-family="var(--sans)" font-size="10" fill="#1D9E75">z longitudinal</text>
+    <!-- Tabla equivalencia -->
+    <rect x="296" y="18" width="114" height="126" rx="5" fill="var(--bg3)" stroke="var(--border)" stroke-width="0.5"/>
+    <text x="353" y="34" text-anchor="middle" font-family="var(--sans)" font-size="10" font-weight="500" fill="var(--text)">Equivalencia</text>
+    <line x1="298" y1="40" x2="408" y2="40" stroke="var(--border)" stroke-width="0.5"/>
+    <text x="338" y="54" text-anchor="middle" font-family="var(--sans)" font-size="9" fill="var(--muted)">Prog.</text>
+    <text x="376" y="54" text-anchor="middle" font-family="var(--sans)" font-size="9" fill="#EF9F27">fuerte</text>
+    <text x="404" y="54" text-anchor="middle" font-family="var(--sans)" font-size="9" fill="#378ADD">débil</text>
+    <line x1="298" y1="59" x2="408" y2="59" stroke="var(--border)" stroke-width="0.5"/>
+    <text x="306" y="74" font-family="var(--sans)" font-size="10" fill="var(--text)">CIRSOC</text>
+    <text x="376" y="74" text-anchor="middle" font-family="var(--sans)" font-size="11" font-weight="500" fill="#EF9F27">x</text>
+    <text x="404" y="74" text-anchor="middle" font-family="var(--sans)" font-size="11" font-weight="500" fill="#378ADD">y</text>
+    <text x="306" y="93" font-family="var(--sans)" font-size="10" fill="var(--text)">STAAD</text>
+    <text x="376" y="93" text-anchor="middle" font-family="var(--sans)" font-size="11" font-weight="500" fill="#EF9F27">z</text>
+    <text x="404" y="93" text-anchor="middle" font-family="var(--sans)" font-size="11" font-weight="500" fill="#378ADD">y</text>
+    <text x="306" y="112" font-family="var(--sans)" font-size="10" fill="var(--text)">Robot</text>
+    <text x="376" y="112" text-anchor="middle" font-family="var(--sans)" font-size="11" font-weight="500" fill="#EF9F27">y</text>
+    <text x="404" y="112" text-anchor="middle" font-family="var(--sans)" font-size="11" font-weight="500" fill="#378ADD">z</text>
+    <text x="306" y="131" font-family="var(--sans)" font-size="10" fill="var(--text)">OpenSees</text>
+    <text x="376" y="131" text-anchor="middle" font-family="var(--sans)" font-size="11" font-weight="500" fill="#EF9F27">y</text>
+    <text x="404" y="131" text-anchor="middle" font-family="var(--sans)" font-size="11" font-weight="500" fill="#378ADD">z</text>
+    <!-- Inputs -->
+    <rect x="296" y="158" width="114" height="96" rx="5" fill="var(--bg3)" stroke="var(--border)" stroke-width="0.5"/>
+    <text x="353" y="173" text-anchor="middle" font-family="var(--sans)" font-size="10" font-weight="500" fill="var(--text)">Inputs</text>
+    <line x1="298" y1="179" x2="408" y2="179" stroke="var(--border)" stroke-width="0.5"/>
+    <text x="304" y="194" font-family="var(--sans)" font-size="10" fill="var(--muted)">Pu — axial</text>
+    <text x="304" y="210" font-family="var(--sans)" font-size="10" fill="#EF9F27">Muf / Vuf — fuerte</text>
+    <text x="304" y="226" font-family="var(--sans)" font-size="10" fill="#378ADD">Mud / Vud — débil</text>
+    <text x="304" y="244" font-family="var(--sans)" font-size="9" fill="var(--muted)">Tu — torsión (no verif.)</text>
+  </svg>
+</div>
+<p style="font-size:9px;color:var(--muted);margin-bottom:8px;line-height:1.6">Lx = pandeo eje fuerte (x) · Ly = pandeo eje débil (y) · Lz = pandeo torsional</p><label>Lx (cm)</label><input type="text" inputmode="decimal" id="Lx" onchange="checkReady()" value="" step="0.5"></div>
         <div><label>kx</label><input type="text" inputmode="decimal" id="kx" onchange="checkReady()" value="" step="0.05"></div>
       </div>
       <div class="field-row">
@@ -333,44 +387,36 @@ select option { background: var(--bg3); }
       <span>Casos de carga</span><span class="chevron">▾</span>
     </div>
     <div class="form-body">
-      <p style="font-size:10px;color:var(--muted);margin-bottom:10px;">Pu(+) = tracción · Pu(-) = compresión · Eje fuerte = y-y (Muy/Vuz) · Eje débil = z-z (Muz/Vuy)</p>
+      <p style="font-size:10px;color:var(--muted);margin-bottom:10px;line-height:1.6">Pu(+) tracción · Pu(-) compresión<br>Eje fuerte (x): <b>Muf, Vuf</b> (alma §G.2) · Eje débil (y): <b>Mud, Vud</b> (alas §G.6)<br><span style="font-size:9px">STAAD: fuerte=z, débil=y &nbsp;·&nbsp; Robot/OpenSees: fuerte=y, débil=z</span></p>
       <div class="case-tabs" id="caseTabs"></div>
       <div id="casePanels"></div>
       <button onclick="addCase()" style="width:100%;padding:6px;background:transparent;border:1px dashed var(--border2);border-radius:4px;color:var(--muted);font-size:11px;cursor:pointer;margin-top:8px;">+ Agregar caso</button>
     </div>
   </div>
 
-    <div style="padding:0 20px 10px;">
-    <label style="display:block;font-size:10px;color:var(--muted);letter-spacing:0.04em;margin-bottom:3px;">Nombre de la verificación (opcional)</label>
-    <input type="text" id="nombreVerif" placeholder="ej: Columna C1 — Nivel +1.0"
-      style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:4px;
-             color:var(--text);font-family:var(--sans);font-size:12px;padding:6px 8px;outline:none;"
-      onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
-  </div>
-  <button class="btn-calc" id="btnCalc" onclick="calcular()" disabled
-    style="opacity:0.4;cursor:not-allowed;">▶  Calcular verificación</button>
+  <button class="btn-calc" onclick="calcular()">▶  Calcular verificación</button>
 </div>
 
 <!-- MAIN -->
 <div class="main" id="mainContent">
   <div class="empty-state">
     <div class="icon">⊞</div>
-    <p>Completá todos los campos del panel izquierdo.<br>El botón <strong>Calcular verificación</strong> se activa automáticamente cuando todos los datos requeridos estén completos.</p>
+    <p>Completá todos los campos.<br>El botón <strong>Calcular verificación</strong> se activa cuando todo esté completo.</p>
   </div>
 </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ── Constants ──────────────────────────────────────────────────────────────
 const E = 200000, G = 77200;
 const PI = Math.PI;
-const f = x => { if (x === null || x === undefined) return 0; const _n = v => String(v||'').replace(',','.'); if (typeof x === 'string' && /^[A-Za-z][A-Za-z0-9_]*$/.test(x)) { const el = document.getElementById(x); return el ? (parseFloat(_n(el.value)) || 0) : 0; } return parseFloat(_n(x)) || 0; };
+const f = x => { if(x===null||x===undefined)return 0; var _n=function(v){return String(v||'').replace(',','.');}; if(typeof x==='string'&&/^[A-Za-z][A-Za-z0-9_]*$/.test(x)){var el=document.getElementById(x);return el?(parseFloat(_n(el.value))||0):0;} return parseFloat(_n(x))||0; };
 const fmt = (n, d=2) => (n == null || isNaN(n)) ? '—' : n.toFixed(d);
 const pct = n => (n*100).toFixed(1)+'%';
 
 let numCases = 1;
 const defaultCases = [
-  { label: 'Caso 1', desc: '', Pu: 0, Muy: 0, Muz: 0, Vuz: 0, Vuy: 0, Tu: 0 },
+  { label: 'Caso 1', desc: '', Pu: 0, Muf: 0, Mud: 0, Vuf: 0, Vud: 0, Tu: 0 },
 ];
 
 function toggleSection(el) {
@@ -392,7 +438,7 @@ function buildCases() {
   const panels = document.getElementById('casePanels');
   tabs.innerHTML = ''; panels.innerHTML = '';
   for (let i = 0; i < numCases; i++) {
-    const d = defaultCases[i] || { label: `Caso ${i+1}`, desc: '', Pu: 0, Muy: 0, Muz: 0, Vuz: 0, Vuy: 0, Tu: 0 };
+    const d = defaultCases[i] || { label: `Caso ${i+1}`, desc: '', Pu: 0, Muf: 0, Mud: 0, Vuf: 0, Vud: 0, Tu: 0 };
     const tab = document.createElement('button');
     tab.className = 'case-tab' + (i === 0 ? ' active' : '');
     tab.textContent = `C${i+1}`;
@@ -405,15 +451,15 @@ function buildCases() {
       <div class="field-group"><label>Descripción</label><input type="text" id="cd${i}" value="${d.desc}" style="font-family:var(--sans);font-size:12px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;width:100%;outline:none;"></div>
       <div class="field-row">
         <div><label>Pu (kN)</label><input type="number" id="pu${i}" value="${d.Pu}" step="0.01"></div>
-        <div><label>Tu (kNm) <span style="font-size:9px;color:var(--muted)">(no verif.)</span></label><input type="number" id="tu${i}" value="${d.Tu}" step="0.01"></div>
+        <div><label>Tu (kNm) <span style="font-size:9px;color:var(--muted)">(inform.)</span></label><input type="number" id="tu${i}" value="${d.Tu}" step="0.01"></div>
       </div>
       <div class="field-row">
-        <div><label>Muy (kNm) — eje fuerte</label><input type="number" id="muy${i}" value="${d.Muy}" step="0.01"></div>
-        <div><label>Vuz (kN) — eje fuerte</label><input type="number" id="vuz${i}" value="${d.Vuz}" step="0.01"></div>
+        <div><label>Muy (kNm) — eje fuerte</label><input type="number" id="muf${i}" value="${d.Muy}" step="0.01"></div>
+        <div><label>Vuz (kN) — eje fuerte</label><input type="number" id="vuf${i}" value="${d.Vuz}" step="0.01"></div>
       </div>
       <div class="field-row">
-        <div><label>Muz (kNm) — eje débil</label><input type="number" id="muz${i}" value="${d.Muz}" step="0.01"></div>
-        <div><label>Vuy (kN) — eje débil</label><input type="number" id="vuy${i}" value="${d.Vuy}" step="0.01"></div>
+        <div><label>Muz (kNm) — eje débil</label><input type="number" id="mud${i}" value="${d.Muz}" step="0.01"></div>
+        <div><label>Vuy (kN) — eje débil</label><input type="number" id="vud${i}" value="${d.Vuy}" step="0.01"></div>
       </div>`;
     panels.appendChild(panel);
   }
@@ -434,27 +480,19 @@ buildCases();
 
 // ── MAIN CALCULATION ────────────────────────────────────────────────────────
 function calcular() {
-  try {
-  const mat = document.getElementById('mat').value;
-  const perfilNombre = document.getElementById('selPerfil').value;
-  if (!perfilNombre || !mat || !window._perfil) {
-    document.getElementById('mainContent').innerHTML = `
-      <div class="empty-state"><div class="icon">⊞</div>
-      <p>Completá todos los campos y seleccioná un perfil para calcular.</p></div>`;
+  var mat = document.getElementById('mat').value;
+  if (!window._perfil || !mat) {
+    document.getElementById('mainContent').innerHTML = '<div class="empty-state"><div class="icon">&#8862;</div><p>Complet\u00e1 todos los campos.</p></div>';
     return;
   }
   const Fy = mat === 'F24' ? 235 : 355;
   const Fu = mat === 'F24' ? 370 : 490;
   const Fr = mat === 'F24' ? 48 : 69; // MPa residual stress
 
-  // Read profile from memory object (reliable even if <details> is collapsed)
-  const _p = window._perfil || {};
-  const fp = k => (_p[k] !== undefined && _p[k] !== null) ? parseFloat(_p[k]) : f(k);
-  const Ag = fp('Ag'), g = fp('g');
-  const h_total = fp('h'), bf = fp('bf'), tf = fp('tf'), tw = fp('tw'), hw = fp('hw');
-  const Ix = fp('Ix'), Iy = fp('Iy'), Sx = fp('Sx'), Sy = fp('Sy');
-  const Zx = fp('Zx'), Zy = fp('Zy'), rx = fp('rx'), ry = fp('ry');
-  const J = fp('J'), Cw = fp('Cw');
+  var _p=window._perfil||{}; var fp=function(k){return (_p[k]!=null)?parseFloat(_p[k]):f(k);};
+  var Ag=fp('Ag'),g=fp('g'),h_total=fp('h'),bf=fp('bf'),tf=fp('tf'),tw=fp('tw'),hw=fp('hw');
+  var Ix=fp('Ix'),Iy=fp('Iy'),Sx=fp('Sx'),Sy=fp('Sy'),Zx=fp('Zx'),Zy=fp('Zy'),rx=fp('rx'),ry=fp('ry');
+  var J=fp('J'),Cw=fp('Cw');
   const Lx = f('Lx'), kx = f('kx'), Ly = f('Ly'), ky = f('ky');
   const Lz = f('Lz'), kz = f('kz'), Lb = f('Lb'), Cb = f('Cb');
   const cargaPos = document.getElementById('cargaPos').value;
@@ -596,10 +634,10 @@ function calcular() {
   const caseResults = [];
   for (let i = 0; i < numCases; i++) {
     const Pu = f(`pu${i}`);
-    const Muy = f(`muy${i}`);
-    const Muz = f(`muz${i}`);
-    const Vuz = f(`vuz${i}`);
-    const Vuy = f(`vuy${i}`);
+    const Muf = f(`muf${i}`);
+    const Mud = f(`mud${i}`);
+    const Vuf = f(`vuf${i}`);
+    const Vud = f(`vud${i}`);
     const desc = document.getElementById(`cd${i}`)?.value || '';
 
     // Choose f·Pn: compression or tension
@@ -610,11 +648,11 @@ function calcular() {
     const ratio_axial = Math.abs(Pu) / fPn_val;
 
     // G.7: interaction moment-shear
-    const check_G7_z = Math.abs(Vuz) >= 0.6 * Vd_z && Math.abs(Muy) >= 0.75 * Md_x;
-    const check_G7_y = Math.abs(Vuy) >= 0.6 * Vd_y && Math.abs(Muz) >= 0.75 * Md_y;
+    const check_G7_z = Math.abs(Vuf) >= 0.6 * Vd_z && Math.abs(Muy) >= 0.75 * Md_x;
+    const check_G7_y = Math.abs(Vud) >= 0.6 * Vd_y && Math.abs(Muz) >= 0.75 * Md_y;
     let ratio_G7_z = 0, ratio_G7_y = 0;
-    if (check_G7_z) ratio_G7_z = (Math.abs(Muy) / Md_x) + 0.625 * (Math.abs(Vuz) / Vd_z);
-    if (check_G7_y) ratio_G7_y = (Math.abs(Muz) / Md_y) + 0.625 * (Math.abs(Vuy) / Vd_y);
+    if (check_G7_z) ratio_G7_z = (Math.abs(Muy) / Md_x) + 0.625 * (Math.abs(Vuf) / Vd_z);
+    if (check_G7_y) ratio_G7_y = (Math.abs(Muz) / Md_y) + 0.625 * (Math.abs(Vud) / Vd_y);
 
     // H.1
     let ratio_H1, formula;
@@ -671,10 +709,10 @@ function calcular() {
         <span class="c-badge ${c.pass ? 'ok' : 'fail'}">${c.pass ? '✓ VERIFICA' : '✗ NO VERIFICA'}</span>
         <div class="c-detail">
           <div class="c-detail-item">Pu = <b>${fmt(c.Pu,2)} kN</b></div>
-          <div class="c-detail-item">Muy = <b>${fmt(c.Muy,2)} kNm</b></div>
-          <div class="c-detail-item">Muz = <b>${fmt(c.Muz,2)} kNm</b></div>
-          <div class="c-detail-item">Vuz = <b>${fmt(c.Vuz,2)} kN</b></div>
-          <div class="c-detail-item">Vuy = <b>${fmt(c.Vuy,2)} kN</b></div>
+          <div class="c-detail-item">Muf = <b>${fmt(c.Muf,2)} kNm</b></div>
+          <div class="c-detail-item">Mud = <b>${fmt(c.Mud,2)} kNm</b></div>
+          <div class="c-detail-item">Vuf = <b>${fmt(c.Vuf,2)} kN</b></div>
+          <div class="c-detail-item">Vud = <b>${fmt(c.Vud,2)} kN</b></div>
         </div>
       </div>`;
   });
@@ -683,8 +721,8 @@ function calcular() {
   main.innerHTML = `
     <div class="results-header">
       <div>
-        <div class="results-title">${document.getElementById('nombreVerif').value.trim() || 'Verificación Sección Doble T'}</div>
-        <div class="results-subtitle">CIRSOC 301-2018 · ${mat} · ${numCases} caso${numCases>1?'s':''} de carga · © 2026 A. Mieres</div>
+        <div class="results-title">${(document.getElementById('nombreVerif')||{value:''}).value||'Verificación Sección Doble T'}</div>
+        <div class="results-subtitle">CIRSOC 301-2018 · ${mat} · ${numCases} caso${numCases>1?'s':''} de carga · &copy; A. Mieres</div>
       </div>
       <span class="status-badge ${allPass ? 'status-ok' : 'status-fail'}">${allPass ? '✓ TODOS VERIFICAN' : '✗ NO VERIFICA'}</span>
     </div>
@@ -826,7 +864,7 @@ function calcular() {
     <div class="block">
       <div class="block-header">
         <span class="block-tag" style="background:var(--purple-bg);color:var(--purple)">H.1 / G.7</span>
-        <span class="block-title">Verificaciones combinadas por caso de carga</span><span style="font-size:10px;color:var(--muted);margin-left:8px;font-weight:400">Tu ingresado pero no verificado (§H.3 pendiente)</span>
+        <span class="block-title">Verificaciones combinadas</span><span style="font-size:9px;color:var(--muted);margin-left:6px">Tu no verificado</span>
         <span class="status-badge ${allPass?'status-ok':'status-fail'}" style="font-size:11px">${allPass?'✓ OK':'✗ FALLA'}</span>
       </div>
       <div class="block-body">
@@ -837,17 +875,10 @@ function calcular() {
       </div>
     </div>
   `;
-  // ── PDF button at bottom of results ────────────────────────────────────────
-  
-  // PDF export button
-  var _pd = document.createElement('div');
-  _pd.style.cssText = 'margin-top:20px;padding-top:14px;border-top:1px solid var(--border);text-align:right;';
-  _pd.innerHTML = '<button onclick="exportarPDF()" style="padding:10px 24px;background:transparent;border:1px solid var(--border2);border-radius:6px;color:var(--muted);font-size:12px;cursor:pointer;">&#8659; Exportar informe PDF</button>';
+  var _pd=document.createElement('div');
+  _pd.style.cssText='margin-top:20px;padding-top:14px;border-top:1px solid var(--border);text-align:right;';
+  _pd.innerHTML='<button onclick="exportarPDF()" style="padding:10px 24px;background:transparent;border:1px solid var(--border2);border-radius:6px;color:var(--muted);font-size:12px;cursor:pointer;">&#8659; Exportar PDF</button>';
   document.getElementById('mainContent').appendChild(_pd);
-  } catch(err) {
-    document.getElementById('mainContent').innerHTML = '<div class="empty-state"><div class="icon">&#8862;</div><p style="color:#c1121f">Error: ' + err.message + '</p></div>';
-    console.error(err);
-  }
 }
 
 
@@ -897,8 +928,6 @@ function loadPerfil() {
   set('rx', p.rx); set('ry', p.ry);
   set('J', p.J); set('Cw', p.Cw);
   
-  // Store profile data in memory (independent of collapsed <details> UI)
-  window._perfil = p;
   // Show badge
   window._perfil = p;
   checkReady();
@@ -923,212 +952,6 @@ function loadPerfil() {
     </div>`).join('');
 }
 
-function exportarPDF() {
-  const perfil  = document.getElementById('selPerfil').value || '—';
-  const mat     = document.getElementById('mat').value || '—';
-  const nombre  = document.getElementById('nombreVerif').value.trim() || 'Verificación Sección Doble T';
-  const fecha   = new Date().toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit',year:'numeric'});
-  const disclaimer = '<div style="font-family:Arial,sans-serif;font-size:9px;color:#555;border:1px solid #ccc;border-radius:4px;padding:10px 14px;margin-bottom:16px;line-height:1.6;background:#fafafa;"><strong style=\'color:#333\'>© 2026 Aníbal Mieres — anibalmieres@gmail.com</strong><br>CIRSOC 301-2018 Verificador de Secciones de Acero — v1.0.0<br><br><strong>Aviso de uso:</strong> Este informe fue generado por una herramienta de uso exclusivo de su autor. Queda prohibida su reproducción o uso en memorias de cálculo, proyectos o trabajos técnicos de terceros sin autorización escrita expresa del autor.<br><br><strong>Deslinde de responsabilidad:</strong> Los resultados son orientativos y no reemplazan el criterio profesional del ingeniero responsable del proyecto. El autor no asume responsabilidad por el uso de estos resultados en proyectos de terceros sin verificación independiente.</div>';
-  const header  = '<div style="font-family:Arial,sans-serif;margin-bottom:16px;border-bottom:2px solid #333;padding-bottom:10px;"><div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:0.1em">CIRSOC 301-2018</div><div style="font-size:18px;font-weight:700;color:#111">' + nombre + '</div><div style="font-size:11px;color:#444;margin-top:4px">Perfil: <strong>' + perfil + '</strong> &nbsp;|&nbsp; Material: <strong>' + mat + '</strong> &nbsp;|&nbsp; Fecha: <strong>' + fecha + '</strong></div></div>';
-  const content = document.getElementById('mainContent').innerHTML;
-  const printWin = window.open('', '_blank', 'width=900,height=700');
-  printWin.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>' + nombre + ' — ' + perfil + '</title><style>body{font-family:Arial,sans-serif;font-size:11px;color:#111;background:#fff;margin:20px 30px;} table{border-collapse:collapse;width:100%;font-size:10px;} td,th{padding:3px 6px;border:0.5px solid #ddd;} th{background:#f5f5f5;} .empty-state,.btn-calc,button,select,input,#btnCalc{display:none!important;} .block{border:1px solid #ccc;border-radius:4px;margin-bottom:12px;overflow:hidden;} .step-line{padding:3px 8px;margin:2px 0;font-size:10px;} .governs{background:#e8f4fd;padding:6px 10px;font-weight:700;} @media print{body{margin:10mm 15mm;} .block{page-break-inside:avoid;}}</style></head><body>' + header + disclaimer + content + '<div style="margin-top:20px;border-top:1px solid #ccc;padding-top:8px;font-size:8px;color:#888;text-align:center">© 2026 Aníbal Mieres — anibalmieres@gmail.com — CIRSOC 301-2018 v1.0.0 — ' + fecha + '</div></body></html>');
-  printWin.document.close();
-  setTimeout(function(){ printWin.focus(); printWin.print(); }, 500);
-}
-
-function exportarPDF() {
-  var perfil = document.getElementById('selPerfil').value || '—';
-  var mat    = document.getElementById('mat').value || '—';
-  var nombre = (document.getElementById('nombreVerif') || {value:''}).value.trim()
-               || 'Verificación Sección Doble T';
-  var fecha  = new Date().toLocaleDateString('es-AR',
-                {day:'2-digit',month:'2-digit',year:'numeric'});
-
-  var hdr = '<div style="font-family:Arial,sans-serif;padding-bottom:10px;margin-bottom:14px;border-bottom:2px solid #222;">'
-    + '<div style="font-size:9px;color:#666;text-transform:uppercase">CIRSOC 301-2018</div>'
-    + '<div style="font-size:17px;font-weight:700;color:#111;margin:3px 0">' + nombre + '</div>'
-    + '<div style="font-size:10px;color:#444">Perfil: <b>' + perfil + '</b> | Material: <b>' + mat + '</b> | Fecha: <b>' + fecha + '</b></div>'
-    + '</div>';
-
-  var disc = '<div style="font-size:8px;color:#555;border:0.5px solid #ccc;padding:8px;margin-bottom:12px;background:#fafafa;">'
-    + '<b>&copy; 2026 Aníbal Mieres &mdash; anibalmieres@gmail.com</b><br>'
-    + 'CIRSOC 301-2018 Verificador de Secciones v1.0.0<br>'
-    + '<b>Aviso de uso:</b> Este informe es de uso exclusivo de su autor. Queda prohibida su reproducción '
-    + 'o uso en memorias de cálculo de terceros sin autorización escrita del autor.<br>'
-    + '<b>Deslinde:</b> Los resultados son orientativos y no reemplazan el criterio profesional del '
-    + 'ingeniero responsable. El autor no asume responsabilidad por uso en proyectos de terceros.'
-    + '</div>';
-
-  var footTxt = '&copy; 2026 Aníbal Mieres &mdash; anibalmieres@gmail.com &mdash; CIRSOC 301-2018 v1.0.0';
-  var footRight = nombre + ' &mdash; ' + perfil + ' &mdash; ' + fecha;
-  var body = document.getElementById('mainContent').innerHTML;
-
-  var css = '@page{size:A4;margin:12mm 15mm 25mm 15mm}'
-    + 'body{font-family:Arial,sans-serif;font-size:10px;color:#111;margin:0}'
-    + 'table{border-collapse:collapse;width:100%;font-size:9px}'
-    + 'td,th{padding:2px 5px;border:0.5px solid #ddd}'
-    + 'th{background:#f0f0f0;font-size:8px}'
-    + '.empty-state,button,select,input{display:none!important}'
-    + '.block{border:0.5px solid #ccc;border-radius:3px;margin-bottom:10px;page-break-inside:avoid;overflow:hidden}'
-    + '.block-header{background:#222;color:#fff;padding:5px 8px;font-size:10px;font-weight:700;display:flex;justify-content:space-between}'
-    + '.block-body{padding:6px 8px}'
-    + '.step-line{padding:2px 6px;font-size:9px;display:flex;gap:6px}'
-    + '.step-pass{border-left:2px solid #2d6a4f}.step-fail{border-left:2px solid #c1121f}.step-info{border-left:2px solid #1a5fa8}'
-    + '.step-label{color:#555;min-width:160px;font-size:8px}.step-val{font-weight:600}.step-eq{color:#888;font-size:8px;margin-left:auto}'
-    + '.governs{background:#e8f4fd;padding:4px 8px;font-weight:700}'
-    + '.resist-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:10px}'
-    + '.resist-card{border:0.5px solid #ddd;padding:4px 6px}'
-    + '.resist-card .label{font-size:7px;color:#666;text-transform:uppercase}'
-    + '.resist-card .value{font-size:12px;font-weight:700}'
-    + '.v-blue .value{color:#1a5fa8}.v-green .value{color:#2d6a4f}.v-teal .value{color:#0f6e56}'
-    + '.v-amber .value{color:#854f0b}.v-red .value{color:#a32d2d}.v-purple .value{color:#534ab7}'
-    + '.results-header{margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start}'
-    + '.results-title{font-size:14px;font-weight:700}.results-subtitle{font-size:9px;color:#666}'
-    + '.status-badge{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}'
-    + '.status-ok{background:#d8f3dc;color:#2d6a4f}.status-fail{background:#ffe0e0;color:#c1121f}'
-    + '.cases-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}'
-    + '.case-result{border:0.5px solid #ccc;padding:6px;page-break-inside:avoid}'
-    + '.case-result.pass{border-color:#2d6a4f}.case-result.fail{border-color:#c1121f}'
-    + '.ratio-bar{display:none}'
-    + '.clasif-pill{display:inline-flex;padding:1px 5px;border-radius:6px;font-size:8px;font-weight:600;margin-right:2px}'
-    + '.clasif-compact{background:#d8f3dc;color:#2d6a4f}.clasif-noncompact{background:#fff3cd;color:#633806}.clasif-slender{background:#ffe0e0;color:#a32d2d}'
-    + '.section-sub{font-size:8px;font-weight:700;color:#666;text-transform:uppercase;margin:5px 0 2px}'
-    + '.divider-line{border:none;border-top:0.5px solid #ddd;margin:4px 0}'
-    + '.print-footer{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-between;'
-    + 'padding:3mm 15mm;border-top:0.5px solid #ccc;font-size:7px;color:#888;background:white}';
-
-  var win = window.open('', '_blank');
-  if (!win) { alert('Habilitá ventanas emergentes para exportar.'); return; }
-  win.document.write(
-    '<!DOCTYPE html><html><head><meta charset="UTF-8">'
-    + '<title>' + nombre + '</title>'
-    + '<style>' + css + '</style>'
-    + '</head><body>'
-    + hdr + disc + body
-    + '<div class="print-footer"><span>' + footTxt + '</span><span>' + footRight + '</span></div>'
-    + '</body></html>'
-  );
-  win.document.close();
-  setTimeout(function(){ win.focus(); win.print(); }, 700);
-}
-
-function checkReady() {
-  const ok = window._perfil &&
-             document.getElementById('mat').value &&
-             parseFloat(document.getElementById('Lx').value) > 0 &&
-             parseFloat(document.getElementById('Ly').value) > 0 &&
-             parseFloat(document.getElementById('Lz').value) > 0 &&
-             parseFloat(document.getElementById('Lb').value) > 0 &&
-             parseFloat(document.getElementById('kx').value) > 0 &&
-             parseFloat(document.getElementById('ky').value) > 0 &&
-             parseFloat(document.getElementById('kz').value) > 0;
-  const btn = document.getElementById('btnCalc');
-  if (btn) { btn.disabled = !ok; btn.style.opacity = ok ? '1' : '0.4'; btn.style.cursor = ok ? 'pointer' : 'not-allowed'; }
-}
-
-function exportarPDF() {
-  var perfil = document.getElementById('selPerfil').value || '—';
-  var mat    = document.getElementById('mat').value || '—';
-  var nombre = (document.getElementById('nombreVerif') || {value:''}).value.trim()
-               || 'Verificación Sección Doble T';
-  var fecha  = new Date().toLocaleDateString('es-AR',
-                {day:'2-digit',month:'2-digit',year:'numeric'});
-
-  var hdr = '<div style="font-family:Arial,sans-serif;padding-bottom:10px;margin-bottom:14px;border-bottom:2px solid #222;">'
-    + '<div style="font-size:9px;color:#666;text-transform:uppercase">CIRSOC 301-2018</div>'
-    + '<div style="font-size:17px;font-weight:700;color:#111;margin:3px 0">' + nombre + '</div>'
-    + '<div style="font-size:10px;color:#444">Perfil: <b>' + perfil + '</b> | Material: <b>' + mat + '</b> | Fecha: <b>' + fecha + '</b></div>'
-    + '</div>';
-
-  var disc = '<div style="font-size:8px;color:#555;border:0.5px solid #ccc;padding:8px;margin-bottom:12px;background:#fafafa;">'
-    + '<b>&copy; 2026 Aníbal Mieres &mdash; anibalmieres@gmail.com</b><br>'
-    + 'CIRSOC 301-2018 Verificador de Secciones v1.0.0<br>'
-    + '<b>Aviso de uso:</b> Este informe es de uso exclusivo de su autor. Queda prohibida su reproducción '
-    + 'o uso en memorias de cálculo de terceros sin autorización escrita del autor.<br>'
-    + '<b>Deslinde:</b> Los resultados son orientativos y no reemplazan el criterio profesional del '
-    + 'ingeniero responsable. El autor no asume responsabilidad por uso en proyectos de terceros.'
-    + '</div>';
-
-  var footTxt = '&copy; 2026 Aníbal Mieres &mdash; anibalmieres@gmail.com &mdash; CIRSOC 301-2018 v1.0.0';
-  var footRight = nombre + ' &mdash; ' + perfil + ' &mdash; ' + fecha;
-  var body = document.getElementById('mainContent').innerHTML;
-
-  var css = '@page{size:A4;margin:12mm 15mm 25mm 15mm}'
-    + 'body{font-family:Arial,sans-serif;font-size:10px;color:#111;margin:0}'
-    + 'table{border-collapse:collapse;width:100%;font-size:9px}'
-    + 'td,th{padding:2px 5px;border:0.5px solid #ddd}'
-    + 'th{background:#f0f0f0;font-size:8px}'
-    + '.empty-state,button,select,input{display:none!important}'
-    + '.block{border:0.5px solid #ccc;border-radius:3px;margin-bottom:10px;page-break-inside:avoid;overflow:hidden}'
-    + '.block-header{background:#222;color:#fff;padding:5px 8px;font-size:10px;font-weight:700;display:flex;justify-content:space-between}'
-    + '.block-body{padding:6px 8px}'
-    + '.step-line{padding:2px 6px;font-size:9px;display:flex;gap:6px}'
-    + '.step-pass{border-left:2px solid #2d6a4f}.step-fail{border-left:2px solid #c1121f}.step-info{border-left:2px solid #1a5fa8}'
-    + '.step-label{color:#555;min-width:160px;font-size:8px}.step-val{font-weight:600}.step-eq{color:#888;font-size:8px;margin-left:auto}'
-    + '.governs{background:#e8f4fd;padding:4px 8px;font-weight:700}'
-    + '.resist-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:10px}'
-    + '.resist-card{border:0.5px solid #ddd;padding:4px 6px}'
-    + '.resist-card .label{font-size:7px;color:#666;text-transform:uppercase}'
-    + '.resist-card .value{font-size:12px;font-weight:700}'
-    + '.v-blue .value{color:#1a5fa8}.v-green .value{color:#2d6a4f}.v-teal .value{color:#0f6e56}'
-    + '.v-amber .value{color:#854f0b}.v-red .value{color:#a32d2d}.v-purple .value{color:#534ab7}'
-    + '.results-header{margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start}'
-    + '.results-title{font-size:14px;font-weight:700}.results-subtitle{font-size:9px;color:#666}'
-    + '.status-badge{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}'
-    + '.status-ok{background:#d8f3dc;color:#2d6a4f}.status-fail{background:#ffe0e0;color:#c1121f}'
-    + '.cases-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}'
-    + '.case-result{border:0.5px solid #ccc;padding:6px;page-break-inside:avoid}'
-    + '.case-result.pass{border-color:#2d6a4f}.case-result.fail{border-color:#c1121f}'
-    + '.ratio-bar{display:none}'
-    + '.clasif-pill{display:inline-flex;padding:1px 5px;border-radius:6px;font-size:8px;font-weight:600;margin-right:2px}'
-    + '.clasif-compact{background:#d8f3dc;color:#2d6a4f}.clasif-noncompact{background:#fff3cd;color:#633806}.clasif-slender{background:#ffe0e0;color:#a32d2d}'
-    + '.section-sub{font-size:8px;font-weight:700;color:#666;text-transform:uppercase;margin:5px 0 2px}'
-    + '.divider-line{border:none;border-top:0.5px solid #ddd;margin:4px 0}'
-    + '.print-footer{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-between;'
-    + 'padding:3mm 15mm;border-top:0.5px solid #ccc;font-size:7px;color:#888;background:white}';
-
-  var win = window.open('', '_blank');
-  if (!win) { alert('Habilitá ventanas emergentes para exportar.'); return; }
-  win.document.write(
-    '<!DOCTYPE html><html><head><meta charset="UTF-8">'
-    + '<title>' + nombre + '</title>'
-    + '<style>' + css + '</style>'
-    + '</head><body>'
-    + hdr + disc + body
-    + '<div class="print-footer"><span>' + footTxt + '</span><span>' + footRight + '</span></div>'
-    + '</body></html>'
-  );
-  win.document.close();
-  setTimeout(function(){ win.focus(); win.print(); }, 700);
-}
-
-function checkReady() {
-  const ok = !!window._perfil &&
-             !!document.getElementById('mat').value &&
-             (parseFloat(document.getElementById('Lx').value) || 0) > 0 &&
-             (parseFloat(document.getElementById('Ly').value) || 0) > 0 &&
-             (parseFloat(document.getElementById('Lz').value) || 0) > 0 &&
-             (parseFloat(document.getElementById('Lb').value) || 0) > 0 &&
-             (parseFloat(document.getElementById('kx').value) || 0) > 0 &&
-             (parseFloat(document.getElementById('ky').value) || 0) > 0 &&
-             (parseFloat(document.getElementById('kz').value) || 0) > 0 &&
-             (parseFloat(document.getElementById('Cb').value.replace(',','.')) || 0) > 0;
-  const btn = document.getElementById('btnCalc');
-  if (btn) {
-    btn.disabled = !ok;
-    btn.style.opacity = ok ? '1' : '0.4';
-    btn.style.cursor = ok ? 'pointer' : 'not-allowed';
-  }
-  // Green border when field is valid
-  ['Lx','Ly','Lz','Lb','kx','ky','kz','Cb'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el || el.value === '') { el.style.borderColor = ''; return; }
-    const v = parseFloat(el.value) || 0;
-    el.style.borderColor = v > 0 ? 'var(--green)' : 'var(--red)';
-  });
-}
-
 function clearBadge() {
   document.getElementById('perfil-badge').style.display = 'none';
   document.getElementById('selPerfil').value = '';
@@ -1139,13 +962,69 @@ function clearBadge() {
 filterPerfiles();
 
 // init
-(function() {
-  try {
-    filterPerfiles();
-    buildCases();
-    console.log('Init OK - perfiles:', PERFILES_DB.length);
-  } catch(e) {
-    console.error('INIT ERROR:', e);
-    // Show error visibly on page
-    var errDiv = document.createElement('div');
-    errDiv.style.cssText = 'position:fixed;top:10px;left:50%;transform:translateX(-50%);background:#c1121f;color:white;padding:12p
+filterPerfiles();
+
+function checkReady() {
+  var nd=function(id){var el=document.getElementById(id);return el?parseFloat(String(el.value).replace(',','.'))||0:0;};
+  var ok = !!window._perfil && !!document.getElementById('mat').value
+    && nd('Lx')>0 && nd('Ly')>0 && nd('Lz')>0 && nd('Lb')>0
+    && nd('kx')>0 && nd('ky')>0 && nd('kz')>0 && nd('Cb')>0;
+  var btn=document.getElementById('btnCalc');
+  if(btn){btn.disabled=!ok;btn.style.opacity=ok?'1':'0.4';btn.style.cursor=ok?'pointer':'not-allowed';}
+  ['Lx','Ly','Lz','Lb','kx','ky','kz','Cb'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el||el.value===''){el.classList.remove('field-ok','field-err');return;}
+    var v=parseFloat(String(el.value).replace(',','.'))||0;
+    el.classList.toggle('field-ok',v>0);el.classList.toggle('field-err',v<=0);
+  });
+  var m=document.getElementById('mat');if(m)m.style.borderColor=m.value?'#1d9e75':'';
+}
+
+function exportarPDF() {
+  var perfil=document.getElementById('selPerfil').value||'-';
+  var mat=document.getElementById('mat').value||'-';
+  var nv=document.getElementById('nombreVerif');
+  var nombre=(nv&&nv.value.trim())||'Verificacion Seccion Doble T';
+  var fecha=new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  var hdr='<div style="font-family:Arial;padding-bottom:10px;margin-bottom:12px;border-bottom:2px solid #222;">'
+    +'<div style="font-size:9px;color:#666;text-transform:uppercase">CIRSOC 301-2018</div>'
+    +'<div style="font-size:17px;font-weight:700;color:#111;margin:3px 0">'+nombre+'</div>'
+    +'<div style="font-size:10px;color:#444">Perfil: <b>'+perfil+'</b> | Material: <b>'+mat+'</b> | Fecha: <b>'+fecha+'</b></div>'
+    +'</div>';
+  var disc='<div style="font-size:8px;color:#555;border:0.5px solid #ccc;padding:8px;margin-bottom:12px;background:#fafafa;">'
+    +'<b>Copyright 2026 Anibal Mieres</b><br>CIRSOC 301-2018 Verificador de Secciones v1.0.0<br>'
+    +'<b>Aviso:</b> Uso exclusivo del autor. Prohibida reproduccion en trabajos de terceros sin autorizacion escrita.<br>'
+    +'<b>Deslinde:</b> Resultados orientativos. No reemplazan criterio del ingeniero responsable.'
+    +'</div>';
+  var body=document.getElementById('mainContent').innerHTML;
+  var css='@page{size:A4;margin:12mm 15mm 25mm 15mm}body{font-family:Arial,sans-serif;font-size:10px;color:#111;margin:0}'
+    +'table{border-collapse:collapse;width:100%;font-size:9px}td,th{padding:2px 5px;border:0.5px solid #ddd}th{background:#f0f0f0;font-size:8px}'
+    +'.empty-state,button,select,input{display:none!important}'
+    +'.block{border:0.5px solid #ccc;border-radius:3px;margin-bottom:10px;page-break-inside:avoid;overflow:hidden}'
+    +'.block-header{background:#222;color:#fff;padding:5px 8px;font-size:10px;font-weight:700;display:flex;justify-content:space-between}'
+    +'.block-body{padding:6px 8px}.step-line{padding:2px 6px;font-size:9px;display:flex;gap:6px}'
+    +'.step-pass{border-left:2px solid #2d6a4f}.step-fail{border-left:2px solid #c1121f}.step-info{border-left:2px solid #1a5fa8}'
+    +'.step-label{color:#555;min-width:160px;font-size:8px}.step-val{font-weight:600}.step-eq{color:#888;font-size:8px;margin-left:auto}'
+    +'.governs{background:#e8f4fd;padding:4px 8px;font-weight:700}'
+    +'.resist-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:10px}'
+    +'.resist-card{border:0.5px solid #ddd;padding:4px 6px}.resist-card .label{font-size:7px;color:#666;text-transform:uppercase}.resist-card .value{font-size:12px;font-weight:700}'
+    +'.v-blue .value{color:#1a5fa8}.v-green .value{color:#2d6a4f}.v-teal .value{color:#0f6e56}.v-amber .value{color:#854f0b}.v-red .value{color:#a32d2d}.v-purple .value{color:#534ab7}'
+    +'.results-header{margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start}'
+    +'.results-title{font-size:14px;font-weight:700}.results-subtitle{font-size:9px;color:#666}'
+    +'.status-badge{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}.status-ok{background:#d8f3dc;color:#2d6a4f}.status-fail{background:#ffe0e0;color:#c1121f}'
+    +'.cases-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.case-result{border:0.5px solid #ccc;padding:6px;page-break-inside:avoid}'
+    +'.case-result.pass{border-color:#2d6a4f}.case-result.fail{border-color:#c1121f}.ratio-bar{display:none}'
+    +'.clasif-pill{display:inline-flex;padding:1px 5px;border-radius:6px;font-size:8px;font-weight:600;margin-right:2px}'
+    +'.clasif-compact{background:#d8f3dc;color:#2d6a4f}.clasif-noncompact{background:#fff3cd;color:#633806}.clasif-slender{background:#ffe0e0;color:#a32d2d}'
+    +'.section-sub{font-size:8px;font-weight:700;color:#666;text-transform:uppercase;margin:5px 0 2px}'
+    +'.divider-line{border:none;border-top:0.5px solid #ddd;margin:4px 0}'
+    +'.print-footer{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-between;padding:3mm 15mm;border-top:0.5px solid #ccc;font-size:7px;color:#888;background:white}';
+  var win=window.open('','_blank');
+  if(!win){alert('Habilita ventanas emergentes.');return;}
+  win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+nombre+'</title><style>'+css+'</style></head><body>'+hdr+disc+body+'<div class="print-footer"><span>Copyright 2026 Anibal Mieres - CIRSOC 301-2018 v1.0.0</span><span>'+nombre+' - '+perfil+' - '+fecha+'</span></div></body></html>');
+  win.document.close();
+  setTimeout(function(){win.focus();win.print();},700);
+}
+</script>
+</body>
+</html>
