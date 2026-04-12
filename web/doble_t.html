@@ -276,9 +276,8 @@ select option { background: var(--bg3); }
       <span>Longitudes de pandeo</span><span class="chevron">▾</span>
     </div>
     <div class="form-body">
-      <div class="field-row">
-        <div><p style="font-size:9px;color:var(--muted);margin-bottom:8px;line-height:1.6">Lx = pandeo eje fuerte (x) · Ly = pandeo eje débil (y) · Lz = pandeo torsional</p>
-<div style="padding:0 20px 10px;">
+      <div style="padding:0 20px 6px;">
+  <p style="font-size:9px;color:var(--muted);margin-bottom:8px;line-height:1.6">Lx = pandeo eje fuerte (x) · Ly = pandeo eje débil (y) · Lz = pandeo torsional</p>
   <button onclick="document.getElementById('modal-ejes').style.display='flex'"
     style="width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);
            border-radius:5px;color:var(--muted);font-size:11px;cursor:pointer;
@@ -288,7 +287,6 @@ select option { background: var(--bg3); }
     &#8862;&nbsp; Ver convención de ejes &amp; equivalencias
   </button>
 </div>
-
 <div id="modal-ejes" onclick="if(event.target===this)this.style.display='none'"
   style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;
          background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;">
@@ -358,7 +356,7 @@ select option { background: var(--bg3); }
     </svg>
   </div>
 </div>
-      <div class="field-row">
+<div class="field-row">
         <div><label>Lx (cm)</label><input type="text" inputmode="decimal" id="Lx" onchange="checkReady()" value="" step="0.5"></div>
         <div><label>kx</label><input type="text" inputmode="decimal" id="kx" onchange="checkReady()" value="" step="0.05"></div>
       </div>
@@ -420,7 +418,7 @@ select option { background: var(--bg3); }
     </div>
   </div>
 
-  <button class="btn-calc" onclick="calcular()">▶  Calcular verificación</button>
+  <div style="padding:0 20px 10px;"><label style="display:block;font-size:10px;color:var(--muted);margin-bottom:3px;">Nombre verificación (opcional)</label><input type="text" id="nombreVerif" placeholder="ej: Columna C1" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:var(--sans);font-size:12px;padding:6px 8px;outline:none;"></div><button class="btn-calc" id="btnCalc" onclick="calcular()" disabled style="opacity:0.4;cursor:not-allowed;">▶  Calcular verificación</button>
 </div>
 
 <!-- MAIN -->
@@ -506,6 +504,7 @@ buildCases();
 
 // ── MAIN CALCULATION ────────────────────────────────────────────────────────
 function calcular() {
+  try {
   var mat = document.getElementById('mat').value;
   if (!window._perfil || !mat) {
     document.getElementById('mainContent').innerHTML = '<div class="empty-state"><div class="icon">&#8862;</div><p>Completá todos los campos.</p></div>';
@@ -756,10 +755,10 @@ function calcular() {
     <div class="resist-grid">
       <div class="resist-card v-blue"><div class="label">Comp. axial φPn</div><div class="value">${fmt(Pd_comp)}<span class="unit">kN</span></div><div class="ref">${governs_comp}</div></div>
       <div class="resist-card v-green"><div class="label">Tract. axial φPn</div><div class="value">${fmt(Pd_tract)}<span class="unit">kN</span></div><div class="ref">D.2 · ${Pd_tract===Pd_yield?'Fluencia gobierna':'Rotura gobierna'}</div></div>
-      <div class="resist-card v-teal"><div class="label">Flexión fuerte φMnx</div><div class="value">${fmt(Md_x)}<span class="unit">kNm</span></div><div class="ref">F.2 · ${plt_zone}</div></div>
-      <div class="resist-card v-purple"><div class="label">Flexión débil φMny</div><div class="value">${fmt(Md_y)}<span class="unit">kNm</span></div><div class="ref">F.6 · Plastificación</div></div>
-      <div class="resist-card v-amber"><div class="label">Corte fuerte φVnz</div><div class="value">${fmt(Vd_z)}<span class="unit">kN</span></div><div class="ref">G.2 · Cv=${fmt(Cv_z,2)}</div></div>
-      <div class="resist-card v-red"><div class="label">Corte débil φVny</div><div class="value">${fmt(Vd_y)}<span class="unit">kN</span></div><div class="ref">G.6 · Cv=${fmt(Cv_y,2)}</div></div>
+      <div class="resist-card v-teal"><div class="label">Flexión fuerte φMdx</div><div class="value">${fmt(Md_x)}<span class="unit">kNm</span></div><div class="ref">F.2 · ${plt_zone}</div></div>
+      <div class="resist-card v-purple"><div class="label">Flexión débil φMdy</div><div class="value">${fmt(Md_y)}<span class="unit">kNm</span></div><div class="ref">F.6 · Plastificación</div></div>
+      <div class="resist-card v-amber"><div class="label">Corte fuerte φVdy</div><div class="value">${fmt(Vd_z)}<span class="unit">kN</span></div><div class="ref">G.2 · Cv=${fmt(Cv_z,2)}</div></div>
+      <div class="resist-card v-red"><div class="label">Corte débil φVdx</div><div class="value">${fmt(Vd_y)}<span class="unit">kN</span></div><div class="ref">G.6 · Cv=${fmt(Cv_y,2)}</div></div>
     </div>
 
     <!-- E.3/E.4 -->
@@ -905,6 +904,13 @@ function calcular() {
   _pd.style.cssText='margin-top:20px;padding-top:14px;border-top:1px solid var(--border);text-align:right;';
   _pd.innerHTML='<button onclick="exportarPDF()" style="padding:10px 24px;background:transparent;border:1px solid var(--border2);border-radius:6px;color:var(--muted);font-size:12px;cursor:pointer;">&#8659; Exportar PDF</button>';
   document.getElementById('mainContent').appendChild(_pd);
+  } catch(err) {
+    var _errDiv = document.createElement('div');
+    _errDiv.style.cssText = 'position:fixed;top:10px;left:50%;transform:translateX(-50%);background:#c1121f;color:white;padding:12px 20px;border-radius:6px;z-index:9999;font-size:13px;max-width:600px;';
+    _errDiv.textContent = 'Error: ' + err.message + ' (línea ' + (err.lineNumber||'?') + ')';
+    document.body.appendChild(_errDiv);
+    console.error(err);
+  }
 }
 
 
