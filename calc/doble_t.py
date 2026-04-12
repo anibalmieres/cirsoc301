@@ -15,16 +15,10 @@
 # Cubre: Clasificación B.4-1 / E.3 / E.4 / F.2 / F.6 / G.2 / G.6 / D.2 /
 #        J.4.3 / H.1-1a / H.1-1b / G.7
 #
-# CONVENCIÓN DE EJES (CIRSOC 301-2018):
-#   x-x = eje fuerte (Ix mayor)   y-y = eje débil (Iy menor)
-#   Mdx (F.2) = flexión eje fuerte    Mdy (F.6) = flexión eje débil
-#   Vdy (G.2) = corte alma, por flexión eje fuerte
-#   Vdx (G.6) = corte alas, por flexión eje débil
-#
-# EQUIVALENCIA CON PROGRAMAS:
-#   STAAD: eje fuerte = z, eje débil = y
-#   Robot: eje fuerte = y, eje débil = z
-#   OpenSees: eje fuerte = y, eje débil = z
+# CONVENCIÓN DE EJES (CIRSOC 301-2018 §H.1.1):
+#   x-x = eje fuerte (Ix mayor) | y-y = eje débil (Iy menor)
+#   Mdx (F.2), Vdy (G.2) → comparar con Mux, Vux
+#   Mdy (F.6), Vdx (G.6) → comparar con Muy, Vuy
 #
 # Todas las funciones son puras (sin estado global, sin UI).
 # Devuelven objetos BloqueResultado para trazabilidad completa.
@@ -82,10 +76,10 @@ class Material:
 @dataclass
 class InputsEstructurales:
     """Parámetros geométrico-estructurales del miembro (no del perfil)."""
-    Lx:  float          # cm  longitud de pandeo eje fuerte (x-x)
-    kx:  float          # —   coeficiente eje fuerte (x-x)
-    Ly:  float          # cm  longitud de pandeo eje débil (y-y)
-    ky:  float          # —   coeficiente eje débil (y-y)
+    Lx:  float          # cm  longitud de pandeo eje fuerte
+    kx:  float          # —   coeficiente eje fuerte
+    Ly:  float          # cm  longitud de pandeo eje débil
+    ky:  float          # —   coeficiente eje débil
     Lz:  float          # cm  longitud de pandeo torsional
     kz:  float          # —   coeficiente torsional
     Lb:  float          # cm  distancia entre puntos de arriostramiento lateral
@@ -129,15 +123,16 @@ class CasoCarga:
     """
     Solicitaciones de diseño para un caso de carga.
     Convención: Pu(+) = tracción, Pu(-) = compresión.
-    Eje fuerte = x-x → Muf, Vuf (alma) | Eje débil = y-y → Mud, Vud (alas)
+    Convención CIRSOC §H.1.1: x = eje fuerte, y = eje débil
+    Eje fuerte = x-x → Mux, Vux (alma §G.2) | Eje débil = y-y → Muy, Vuy (alas §G.6)
     """
     label: str
     desc:  str
     Pu:    float = 0.0   # kN    axial
-    Muf:   float = 0.0   # kNm   momento último eje fuerte (x-x) — STAAD: Muz / Robot: Muy
-    Mud:   float = 0.0   # kNm   momento último eje débil (y-y)  — STAAD: Muy / Robot: Muz
-    Vuf:   float = 0.0   # kN    cortante último paralelo al alma (Vdy §G.2) — STAAD: Vuy / Robot: Vuz
-    Vud:   float = 0.0   # kN    cortante último paralelo a las alas (Vdx §G.6) — STAAD: Vuz / Robot: Vuy
+    Mux:   float = 0.0   # kNm   momento último eje fuerte (x-x) §H.1.1
+    Muy:   float = 0.0   # kNm   momento último eje débil (y-y) §H.1.1
+    Vux:   float = 0.0   # kN    cortante último paralelo al alma (Vdy §G.2)
+    Vuy:   float = 0.0   # kN    cortante último paralelo a las alas (Vdx §G.6)
     Tu:    float = 0.0   # kNm   torsión (informativo)
 
 
@@ -402,9 +397,9 @@ def flexion_eje_debil(p: PerfilDobleT, mat: Material,
 # ══════════════════════════════════════════════════════════════════════════════
 
 def corte_eje_fuerte(p: PerfilDobleT, mat: Material) -> BloqueResultado:
-    b = BloqueResultado(titulo="Corte — eje fuerte, alma (§G.2) → Vdy",
+    b = BloqueResultado(titulo="Corte — eje fuerte (alma)",
                         referencia="CIRSOC 301-2018 §G.2",
-                        simbolo="Vdy", unidad="kN")
+                        simbolo="Vdy", unidad="kN")  # G.2 alma — resiste Vux
     φv  = 0.9
     Aw  = p.h * p.tw
     kv  = 5.0
@@ -426,7 +421,7 @@ def corte_eje_fuerte(p: PerfilDobleT, mat: Material) -> BloqueResultado:
     Vn = 0.6 * mat.Fy * Aw * Cv * 1e-1
     Vd = φv * Vn
     b.agregar("Vn = 0.6·Fy·Aw·Cv·10⁻¹", f"0.6·{mat.Fy}·{Aw:.3f}·{Cv:.3f}·10⁻¹", Vn, "kN", None, None, "G.2-1")
-    b.agregar("Vdy = 0.9·Vn",            f"0.9·{Vn:.3f}", Vd, "kN")
+    b.agregar("Vdx = 0.9·Vn",            f"0.9·{Vn:.3f}", Vd, "kN")
 
     b.valor    = Vd
     b.verifica = True
@@ -439,9 +434,9 @@ def corte_eje_fuerte(p: PerfilDobleT, mat: Material) -> BloqueResultado:
 # ══════════════════════════════════════════════════════════════════════════════
 
 def corte_eje_debil(p: PerfilDobleT, mat: Material) -> BloqueResultado:
-    b = BloqueResultado(titulo="Corte — eje débil, alas (§G.6) → Vdx",
+    b = BloqueResultado(titulo="Corte — eje débil (alas)",
                         referencia="CIRSOC 301-2018 §G.6",
-                        simbolo="Vdx", unidad="kN")
+                        simbolo="Vdx", unidad="kN")  # G.6 alas — resiste Vuy
     φv  = 0.9
     Aw  = p.bf * p.tf
     kv  = 1.2
@@ -569,44 +564,40 @@ def verificar_caso(caso: CasoCarga,
                    Pd_comp: float, Pd_tract: float,
                    Mdx: float, Mdy: float,
                    Vdy: float, Vdx: float) -> dict:
-    """Verifica H.1-1 y G.7-1 para un caso de carga.
-    Convención: Muf/Vuf = eje fuerte, Mud/Vud = eje débil.
-    Vdy (G.2) resiste Vuf (alma). Vdx (G.6) resiste Vud (alas).
-    """
+    """Verifica H.1-1 y G.7-1 para un caso de carga. Devuelve dict con trazabilidad."""
     Pu        = caso.Pu
     fPn       = Pd_comp if Pu <= 0 else Pd_tract
     tipo_ax   = "compresión" if Pu <= 0 else "tracción"
     ratio_ax  = abs(Pu) / fPn if fPn > 0 else 0
 
     # G.7 interacción momento-corte
-    # Vuf (cortante alma) vs Vdy (G.2) — eje fuerte
-    actG7f = (abs(caso.Vuf) >= 0.6*Vdy) and (abs(caso.Muf) >= 0.75*Mdx)
-    ratG7f = (abs(caso.Muf)/Mdx + 0.625*abs(caso.Vuf)/Vdy) if actG7f else None
-    # Vud (cortante alas) vs Vdx (G.6) — eje débil
-    actG7d = (abs(caso.Vud) >= 0.6*Vdx) and (abs(caso.Mud) >= 0.75*Mdy)
-    ratG7d = (abs(caso.Mud)/Mdy + 0.625*abs(caso.Vud)/Vdx) if actG7d else None
+    # G.7: Vux (alma) vs Vdy, Vuy (alas) vs Vdx
+    actG7x = (abs(caso.Vux) >= 0.6*Vdy) and (abs(caso.Mux) >= 0.75*Mdx)
+    ratG7x = (abs(caso.Mux)/Mdx + 0.625*abs(caso.Vux)/Vdy) if actG7x else None
+    actG7y = (abs(caso.Vuy) >= 0.6*Vdx) and (abs(caso.Muy) >= 0.75*Mdy)
+    ratG7y = (abs(caso.Muy)/Mdy + 0.625*abs(caso.Vuy)/Vdx) if actG7y else None
 
     # H.1
-    rMf = abs(caso.Muf) / Mdx if Mdx > 0 else 0   # eje fuerte
-    rMd = abs(caso.Mud) / Mdy if Mdy > 0 else 0   # eje débil
+    rMx = abs(caso.Mux) / Mdx if Mdx > 0 else 0   # eje fuerte
+    rMy = abs(caso.Muy) / Mdy if Mdy > 0 else 0   # eje débil
 
     if ratio_ax >= 0.2:
-        ratio_H1 = ratio_ax + (8/9) * (rMf + rMd);  formula = "H.1-1a"
+        ratio_H1 = ratio_ax + (8/9) * (rMx + rMy);  formula = "H.1-1a"
     else:
-        ratio_H1 = ratio_ax / 2 + (rMf + rMd);       formula = "H.1-1b"
+        ratio_H1 = ratio_ax / 2 + (rMx + rMy);       formula = "H.1-1b"
 
     verifica = (ratio_H1 <= 1.0
-                and (ratG7f is None or ratG7f <= 1.375)
-                and (ratG7d is None or ratG7d <= 1.375))
+                and (ratG7x is None or ratG7x <= 1.375)
+                and (ratG7y is None or ratG7y <= 1.375))
 
     return dict(label=caso.label, desc=caso.desc,
-                Pu=Pu, Muf=caso.Muf, Mud=caso.Mud,
-                Vuf=caso.Vuf, Vud=caso.Vud,
+                Pu=Pu, Mux=caso.Mux, Muy=caso.Muy,
+                Vux=caso.Vux, Vuy=caso.Vuy,
                 tipo_axial=tipo_ax, fPn=fPn,
-                ratio_ax=ratio_ax, rMf=rMf, rMd=rMd,
+                ratio_ax=ratio_ax, rMx=rMx, rMy=rMy,
                 ratio_H1=ratio_H1, formula=formula,
-                activa_G7f=actG7f, ratio_G7f=ratG7f,
-                activa_G7d=actG7d, ratio_G7d=ratG7d,
+                activa_G7x=actG7x, ratio_G7x=ratG7x,
+                activa_G7y=actG7y, ratio_G7y=ratG7y,
                 ratio=ratio_H1, verifica=verifica)
 
 
@@ -667,8 +658,8 @@ def verificar_doblet(perfil:   PerfilDobleT,
             Pd_tract = blq_tr.valor,
             Mdx      = blq_fx.valor,
             Mdy      = blq_fy.valor,
-            Vdy      = blq_vz.valor,   # G.2 alma → resiste Vuf (eje fuerte)
-            Vdx      = blq_vy.valor,   # G.6 alas → resiste Vud (eje débil)
+            Vdy      = blq_vz.valor,   # G.2 alma → resiste Vux
+            Vdx      = blq_vy.valor,   # G.6 alas → resiste Vuy
         ))
 
     return res

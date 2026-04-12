@@ -330,17 +330,17 @@ select option { background: var(--bg3); }
       <text x="476" y="60" text-anchor="middle" font-family="sans-serif" font-size="10" fill="var(--muted)">STAAD</text>
       <text x="532" y="60" text-anchor="middle" font-family="sans-serif" font-size="10" fill="var(--muted)">Robot</text>
       <line x1="330" y1="66" x2="550" y2="66" stroke="var(--border2)" stroke-width="0.5"/>
-      <text x="336" y="83" font-family="sans-serif" font-size="11" fill="#EF9F27">Muf → Mdx (F.2)</text>
+      <text x="336" y="83" font-family="sans-serif" font-size="11" fill="#EF9F27">Mux → Mdx (F.2)</text>
       <text x="476" y="83" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#EF9F27">Muz</text>
       <text x="532" y="83" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#EF9F27">Muy</text>
-      <text x="336" y="105" font-family="sans-serif" font-size="11" fill="#378ADD">Mud → Mdy (F.6)</text>
+      <text x="336" y="105" font-family="sans-serif" font-size="11" fill="#378ADD">Muy → Mdy (F.6)</text>
       <text x="476" y="105" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#378ADD">Muy</text>
       <text x="532" y="105" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#378ADD">Muz</text>
       <line x1="330" y1="114" x2="550" y2="114" stroke="var(--border2)" stroke-width="0.5"/>
-      <text x="336" y="131" font-family="sans-serif" font-size="11" fill="#EF9F27">Vuf → Vdy (G.2) alma</text>
+      <text x="336" y="131" font-family="sans-serif" font-size="11" fill="#EF9F27">Vux → Vdy (G.2) alma</text>
       <text x="476" y="131" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#EF9F27">Vuy</text>
       <text x="532" y="131" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#EF9F27">Vuz</text>
-      <text x="336" y="153" font-family="sans-serif" font-size="11" fill="#378ADD">Vud → Vdx (G.6) alas</text>
+      <text x="336" y="153" font-family="sans-serif" font-size="11" fill="#378ADD">Vuy → Vdx (G.6) alas</text>
       <text x="476" y="153" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#378ADD">Vuz</text>
       <text x="532" y="153" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#378ADD">Vuy</text>
       <line x1="330" y1="162" x2="550" y2="162" stroke="var(--border2)" stroke-width="0.5"/>
@@ -440,7 +440,7 @@ const pct = n => (n*100).toFixed(1)+'%';
 
 let numCases = 1;
 const defaultCases = [
-  { label: 'Caso 1', desc: '', Pu: '', Muf: '', Mud: '', Vuf: '', Vud: '', Tu: '' },
+  { label: 'Caso 1', desc: '', Pu: '', Mux: '', Muy: '', Vux: '', Vuy: '', Tu: '' },
 ];
 
 function toggleSection(el) {
@@ -478,12 +478,12 @@ function buildCases() {
         <div><label>Tu (kNm) <span style="font-size:9px;color:#c1121f">no verif. — §H.3 pend.</span></label><input type="number" id="tu${i}" value="${d.Tu||''}" step="0.01"></div>
       </div>
       <div class="field-row">
-        <div><label style="font-size:10px">Muf (kNm) <span style="font-size:9px;color:var(--muted)">momento último eje fuerte</span></label><input type="number" id="muf${i}" value="${d.Muf||''}" step="0.01"></div>
-        <div><label style="font-size:10px">Vuf (kN) <span style="font-size:9px;color:var(--muted)">cortante último — alma</span></label><input type="number" id="vuf${i}" value="${d.Vuf||''}" step="0.01"></div>
+        <div><label style="font-size:10px">Mux (kNm) <span style="font-size:9px;color:var(--muted)">momento último eje fuerte (x)</span></label><input type="number" id="mux${i}" value="${d.Mux||''}" step="0.01"></div>
+        <div><label style="font-size:10px">Vux (kN) <span style="font-size:9px;color:var(--muted)">cortante último — alma</span></label><input type="number" id="vux${i}" value="${d.Vux||''}" step="0.01"></div>
       </div>
       <div class="field-row">
-        <div><label style="font-size:10px">Mud (kNm) <span style="font-size:9px;color:var(--muted)">momento último eje débil</span></label><input type="number" id="mud${i}" value="${d.Mud||''}" step="0.01"></div>
-        <div><label style="font-size:10px">Vud (kN) <span style="font-size:9px;color:var(--muted)">cortante último — alas</span></label><input type="number" id="vud${i}" value="${d.Vud||''}" step="0.01"></div>
+        <div><label style="font-size:10px">Muy (kNm) <span style="font-size:9px;color:var(--muted)">momento último eje débil (y)</span></label><input type="number" id="muy${i}" value="${d.Muy||''}" step="0.01"></div>
+        <div><label style="font-size:10px">Vuy (kN) <span style="font-size:9px;color:var(--muted)">cortante último — alas</span></label><input type="number" id="vuy${i}" value="${d.Vuy||''}" step="0.01"></div>
       </div>`;
     panels.appendChild(panel);
   }
@@ -586,7 +586,7 @@ function calcular() {
   const Lp = (cargaPos === 'alma') ? 788 * ry / Math.sqrt(Fy) : 709 * ry / Math.sqrt(Fy);
   const FL = Fy - Fr;
   const X1 = (PI / Sx) * Math.sqrt(E * G * J * Ag / 2);
-  const X2 = (4 * Cw / Iy) * Math.pow(Sx / (G * J), 2);
+  const X2 = (4 * Cw / Ix) * Math.pow(Sx / (G * J), 2);  // §F.2-4d: Ix = eje fuerte
   const Lr_full = ry * X1 / FL * Math.sqrt(1 + Math.sqrt(1 + X2 * FL * FL));
   const Lr_simp = 1.28 * ry * X1 / FL;
   const Lr = (cargaPos === 'alma') ? Lr_full : Lr_simp;
@@ -659,10 +659,10 @@ function calcular() {
   const caseResults = [];
   for (let i = 0; i < numCases; i++) {
     const Pu = f(`pu${i}`);
-    const Muy = f(`muf${i}`);
-    const Muz = f(`mud${i}`);
-    const Vuz = f(`vuf${i}`);
-    const Vuy = f(`vud${i}`);
+    const Mux = f(`mux${i}`);
+    const Muy = f(`muy${i}`);
+    const Vux = f(`vux${i}`);
+    const Vuy = f(`vuy${i}`);
     const desc = document.getElementById(`cd${i}`)?.value || '';
 
     // Choose f·Pn: compression or tension
@@ -673,27 +673,27 @@ function calcular() {
     const ratio_axial = Math.abs(Pu) / fPn_val;
 
     // G.7: interaction moment-shear
-    const check_G7_z = Math.abs(Vuz) >= 0.6 * Vd_z && Math.abs(Muy) >= 0.75 * Md_x;
-    const check_G7_y = Math.abs(Vuy) >= 0.6 * Vd_y && Math.abs(Muz) >= 0.75 * Md_y;
-    let ratio_G7_z = 0, ratio_G7_y = 0;
-    if (check_G7_z) ratio_G7_z = (Math.abs(Muy) / Md_x) + 0.625 * (Math.abs(Vuz) / Vd_z);
-    if (check_G7_y) ratio_G7_y = (Math.abs(Muz) / Md_y) + 0.625 * (Math.abs(Vuy) / Vd_y);
+    const check_G7_x = Math.abs(Vux) >= 0.6 * Vd_z && Math.abs(Mux) >= 0.75 * Md_x;
+    const check_G7_y = Math.abs(Vuy) >= 0.6 * Vd_y && Math.abs(Muy) >= 0.75 * Md_y;
+    let ratio_G7_x = 0, ratio_G7_y = 0;
+    if (check_G7_x) ratio_G7_x = (Math.abs(Mux) / Md_x) + 0.625 * (Math.abs(Vux) / Vd_z);
+    if (check_G7_y) ratio_G7_y = (Math.abs(Muy) / Md_y) + 0.625 * (Math.abs(Vuy) / Vd_y);
 
     // H.1
     let ratio_H1, formula;
     if (ratio_axial >= 0.2) {
-      ratio_H1 = ratio_axial + (8/9) * (Math.abs(Muy) / Md_x + Math.abs(Muz) / Md_y);
+      ratio_H1 = ratio_axial + (8/9) * (Math.abs(Mux) / Md_x + Math.abs(Muy) / Md_y);
       formula = 'H.1-1a';
     } else {
-      ratio_H1 = ratio_axial / 2 + (Math.abs(Muy) / Md_x + Math.abs(Muz) / Md_y);
+      ratio_H1 = ratio_axial / 2 + (Math.abs(Mux) / Md_x + Math.abs(Muy) / Md_y);
       formula = 'H.1-1b';
     }
 
-    const maxRatio = Math.max(ratio_H1, ratio_G7_z, ratio_G7_y);
+    const maxRatio = Math.max(ratio_H1, ratio_G7_x, ratio_G7_y);
     const limitG7 = 1.375;
-    const pass = ratio_H1 <= 1.0 && (!check_G7_z || ratio_G7_z <= limitG7) && (!check_G7_y || ratio_G7_y <= limitG7);
+    const pass = ratio_H1 <= 1.0 && (!check_G7_z || ratio_G7_x <= limitG7) && (!check_G7_y || ratio_G7_y <= limitG7);
 
-    caseResults.push({ Pu, Muy, Muz, Vuz, Vuy, desc, ratio_axial, ratio_H1, formula, pass, check_G7_z, ratio_G7_z, check_G7_y, ratio_G7_y, tipo_axial, fPn_val });
+    caseResults.push({ Pu, Muy, Muz, Vuz, Vuy, desc, ratio_axial, ratio_H1, formula, pass, check_G7_z, ratio_G7_x, check_G7_y, ratio_G7_y, tipo_axial, fPn_val });
   }
 
   const allPass = caseResults.every(c => c.pass);
@@ -729,14 +729,14 @@ function calcular() {
         <div class="ratio-val" style="color:${clr}">${fmt(c.ratio_H1, 3)}</div>
         <div class="ratio-limit" style="margin-bottom:4px;">≤ 1,000 requerido</div>
         <div class="ratio-bar"><div class="ratio-fill" style="width:${barW}%;background:${clr}"></div></div>
-        ${c.check_G7_z ? `<div style="font-size:10px;color:var(--amber);margin-top:4px;">G.7-1 alma: ratio = ${fmt(c.ratio_G7_z,3)} ≤ 1,375</div>` : ''}
+        ${c.check_G7_z ? `<div style="font-size:10px;color:var(--amber);margin-top:4px;">G.7-1 alma: ratio = ${fmt(c.ratio_G7_x,3)} ≤ 1,375</div>` : ''}
         ${c.check_G7_y ? `<div style="font-size:10px;color:var(--amber);margin-top:4px;">G.7-1 ala: ratio = ${fmt(c.ratio_G7_y,3)} ≤ 1,375</div>` : ''}
         <span class="c-badge ${c.pass ? 'ok' : 'fail'}">${c.pass ? '✓ VERIFICA' : '✗ NO VERIFICA'}</span>
         <div class="c-detail">
           <div class="c-detail-item">Pu = <b>${fmt(c.Pu,2)} kN</b></div>
+          <div class="c-detail-item">Mux = <b>${fmt(c.Mux,2)} kNm</b></div>
           <div class="c-detail-item">Muy = <b>${fmt(c.Muy,2)} kNm</b></div>
-          <div class="c-detail-item">Muz = <b>${fmt(c.Muz,2)} kNm</b></div>
-          <div class="c-detail-item">Vuz = <b>${fmt(c.Vuz,2)} kN</b></div>
+          <div class="c-detail-item">Vux = <b>${fmt(c.Vux,2)} kN</b></div>
           <div class="c-detail-item">Vuy = <b>${fmt(c.Vuy,2)} kN</b></div>
         </div>
       </div>`;
