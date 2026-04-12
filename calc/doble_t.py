@@ -129,15 +129,15 @@ class CasoCarga:
     """
     Solicitaciones de diseño para un caso de carga.
     Convención: Pu(+) = tracción, Pu(-) = compresión.
-    Eje fuerte = x-x → Muf, Vuf | Eje débil = y-y → Mud, Vud
+    Eje fuerte = x-x → Muf, Vuf (alma) | Eje débil = y-y → Mud, Vud (alas)
     """
     label: str
     desc:  str
     Pu:    float = 0.0   # kN    axial
-    Muf:   float = 0.0   # kNm   flexión eje fuerte (x-x)
-    Mud:   float = 0.0   # kNm   flexión eje débil (y-y)
-    Vuf:   float = 0.0   # kN    cortante eje fuerte — alma (Vdy, §G.2)
-    Vud:   float = 0.0   # kN    cortante eje débil — alas (Vdx, §G.6)
+    Muf:   float = 0.0   # kNm   momento último eje fuerte (x-x) — STAAD: Muz / Robot: Muy
+    Mud:   float = 0.0   # kNm   momento último eje débil (y-y)  — STAAD: Muy / Robot: Muz
+    Vuf:   float = 0.0   # kN    cortante último paralelo al alma (Vdy §G.2) — STAAD: Vuy / Robot: Vuz
+    Vud:   float = 0.0   # kN    cortante último paralelo a las alas (Vdx §G.6) — STAAD: Vuz / Robot: Vuy
     Tu:    float = 0.0   # kNm   torsión (informativo)
 
 
