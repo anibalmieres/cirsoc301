@@ -474,16 +474,16 @@ function buildCases() {
     panel.innerHTML = `
       <div class="field-group"><label>Descripción</label><input type="text" id="cd${i}" value="${d.desc}" style="font-family:var(--sans);font-size:12px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:5px 8px;width:100%;outline:none;"></div>
       <div class="field-row">
-        <div><label>Pu (kN)</label><input type="number" id="pu${i}" value="${d.Pu||''}" step="0.01"></div>
-        <div><label>Tu (kNm) <span style="font-size:9px;color:#c1121f">no verif. — §H.3 pend.</span></label><input type="number" id="tu${i}" value="${d.Tu||''}" step="0.01"></div>
+        <div><label style="font-size:10px">Pu (kN) <span style="font-size:9px;color:var(--muted)">+ trac. / − comp.</span></label><input type="number" id="pu${i}" value="${d.Pu||''}" step="0.01"></div>
+        <div><label style="font-size:10px">Tu (kNm) <span style="font-size:9px;color:#c1121f">no verif. §H.3</span></label><input type="number" id="tu${i}" value="${d.Tu||''}" step="0.01"></div>
       </div>
       <div class="field-row">
-        <div><label style="font-size:10px">Mux (kNm) <span style="font-size:9px;color:var(--muted)">momento último eje fuerte (x)</span></label><input type="number" id="mux${i}" value="${d.Mux||''}" step="0.01"></div>
-        <div><label style="font-size:10px">Vux (kN) <span style="font-size:9px;color:var(--muted)">cortante último — alma</span></label><input type="number" id="vux${i}" value="${d.Vux||''}" step="0.01"></div>
+        <div><label style="font-size:10px">Mux (kNm) <span style="font-size:9px;color:var(--muted)">momento último eje fuerte</span></label><input type="number" id="mux${i}" value="${d.Mux||''}" step="0.01"></div>
+        <div><label style="font-size:10px">Vuy (kN) <span style="font-size:9px;color:var(--muted)">corte por flexión eje fuerte</span></label><input type="number" id="vuy${i}" value="${d.Vuy||''}" step="0.01"></div>
       </div>
       <div class="field-row">
-        <div><label style="font-size:10px">Muy (kNm) <span style="font-size:9px;color:var(--muted)">momento último eje débil (y)</span></label><input type="number" id="muy${i}" value="${d.Muy||''}" step="0.01"></div>
-        <div><label style="font-size:10px">Vuy (kN) <span style="font-size:9px;color:var(--muted)">cortante último — alas</span></label><input type="number" id="vuy${i}" value="${d.Vuy||''}" step="0.01"></div>
+        <div><label style="font-size:10px">Muy (kNm) <span style="font-size:9px;color:var(--muted)">momento último eje débil</span></label><input type="number" id="muy${i}" value="${d.Muy||''}" step="0.01"></div>
+        <div><label style="font-size:10px">Vux (kN) <span style="font-size:9px;color:var(--muted)">corte por flexión eje débil</span></label><input type="number" id="vux${i}" value="${d.Vux||''}" step="0.01"></div>
       </div>`;
     panels.appendChild(panel);
   }
