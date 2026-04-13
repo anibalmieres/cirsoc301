@@ -462,7 +462,7 @@ function buildCases() {
   const panels = document.getElementById('casePanels');
   tabs.innerHTML = ''; panels.innerHTML = '';
   for (let i = 0; i < numCases; i++) {
-    const d = defaultCases[i] || { label: `Caso ${i+1}`, desc: '', Pu: 0, Muy: 0, Muz: 0, Vuz: 0, Vuy: 0, Tu: 0 };
+    const d = defaultCases[i] || { label: `Caso ${i+1}`, desc: '', Pu: 0, Muy: 0, Muy: 0, Vuy: 0, Vux: 0, Tu: 0 };
     const tab = document.createElement('button');
     tab.className = 'case-tab' + (i === 0 ? ' active' : '');
     tab.textContent = `C${i+1}`;
@@ -691,9 +691,9 @@ function calcular() {
 
     const maxRatio = Math.max(ratio_H1, ratio_G7_x, ratio_G7_y);
     const limitG7 = 1.375;
-    const pass = ratio_H1 <= 1.0 && (!check_G7_z || ratio_G7_x <= limitG7) && (!check_G7_y || ratio_G7_y <= limitG7);
+    const pass = ratio_H1 <= 1.0 && (!check_G7_x || ratio_G7_x <= limitG7) && (!check_G7_y || ratio_G7_y <= limitG7);
 
-    caseResults.push({ Pu, Muy, Muz, Vuz, Vuy, desc, ratio_axial, ratio_H1, formula, pass, check_G7_z, ratio_G7_x, check_G7_y, ratio_G7_y, tipo_axial, fPn_val });
+    caseResults.push({ Pu, Mux, Muy, Vuy, Vux, desc, ratio_axial, ratio_H1, formula, pass, check_G7_x, ratio_G7_x, check_G7_y, ratio_G7_y, tipo_axial, fPn_val });
   }
 
   const allPass = caseResults.every(c => c.pass);
@@ -729,7 +729,7 @@ function calcular() {
         <div class="ratio-val" style="color:${clr}">${fmt(c.ratio_H1, 3)}</div>
         <div class="ratio-limit" style="margin-bottom:4px;">≤ 1,000 requerido</div>
         <div class="ratio-bar"><div class="ratio-fill" style="width:${barW}%;background:${clr}"></div></div>
-        ${c.check_G7_z ? `<div style="font-size:10px;color:var(--amber);margin-top:4px;">G.7-1 alma: ratio = ${fmt(c.ratio_G7_x,3)} ≤ 1,375</div>` : ''}
+        ${c.check_G7_x ? `<div style="font-size:10px;color:var(--amber);margin-top:4px;">G.7-1 alma: ratio = ${fmt(c.ratio_G7_x,3)} ≤ 1,375</div>` : ''}
         ${c.check_G7_y ? `<div style="font-size:10px;color:var(--amber);margin-top:4px;">G.7-1 ala: ratio = ${fmt(c.ratio_G7_y,3)} ≤ 1,375</div>` : ''}
         <span class="c-badge ${c.pass ? 'ok' : 'fail'}">${c.pass ? '✓ VERIFICA' : '✗ NO VERIFICA'}</span>
         <div class="c-detail">
