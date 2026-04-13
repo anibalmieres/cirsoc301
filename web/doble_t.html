@@ -752,15 +752,6 @@ function calcular() {
       <span class="status-badge ${allPass ? 'status-ok' : 'status-fail'}">${allPass ? '✓ TODOS VERIFICAN' : '✗ NO VERIFICA'}</span>
     </div>
 
-    <div class="resist-grid">
-      <div class="resist-card v-blue"><div class="label">Comp. axial φPn</div><div class="value">${fmt(Pd_comp)}<span class="unit">kN</span></div><div class="ref">${governs_comp}</div></div>
-      <div class="resist-card v-green"><div class="label">Tract. axial φPn</div><div class="value">${fmt(Pd_tract)}<span class="unit">kN</span></div><div class="ref">D.2 · ${Pd_tract===Pd_yield?'Fluencia gobierna':'Rotura gobierna'}</div></div>
-      <div class="resist-card v-teal"><div class="label">Flexión fuerte φMdx</div><div class="value">${fmt(Md_x)}<span class="unit">kNm</span></div><div class="ref">F.2 · ${plt_zone}</div></div>
-      <div class="resist-card v-purple"><div class="label">Flexión débil φMdy</div><div class="value">${fmt(Md_y)}<span class="unit">kNm</span></div><div class="ref">F.6 · Plastificación</div></div>
-      <div class="resist-card v-amber"><div class="label">Corte fuerte φVdy</div><div class="value">${fmt(Vd_z)}<span class="unit">kN</span></div><div class="ref">G.2 · Cv=${fmt(Cv_z,2)}</div></div>
-      <div class="resist-card v-red"><div class="label">Corte débil φVdx</div><div class="value">${fmt(Vd_y)}<span class="unit">kN</span></div><div class="ref">G.6 · Cv=${fmt(Cv_y,2)}</div></div>
-    </div>
-
     <!-- E.3/E.4 -->
     <div class="block">
       <div class="block-header">
@@ -853,13 +844,13 @@ function calcular() {
       <div class="block-header">
         <span class="block-tag" style="background:var(--amber-bg);color:var(--amber)">G.2</span>
         <span class="block-title">Corte por flexión alrededor del eje fuerte</span>
-        <span class="block-result" style="color:var(--amber)">Vdy = ${fmt(Vd_z)} kN</span>
+        <span class="block-result" style="color:var(--amber)">Vd = ${fmt(Vd_z)} kN</span>
       </div>
       <div class="block-body">
         ${stepC('Aw = d·tw', fmt(Aw_z), 'cm²', 'G.2-2', null)}
         ${stepC('kv = 5 (sin rigidizadores)', '', '', '', null)}
         ${stepC('h/tw = '+fmt(htw), `Cv = ${fmt(Cv_z)}`, '', htw<=lim1_z?'G.2-3':htw<=lim2_z?'G.2-4':'G.2-5', null)}
-        ${govCard(Vd_z, 'kN', 'Vdy = 0.9·0.6·Fy·Aw·Cv')}
+        ${govCard(Vd_z, 'kN', 'Vd = 0.9·0.6·Fy·Aw·Cv')}
       </div>
     </div>
 
@@ -868,13 +859,13 @@ function calcular() {
       <div class="block-header">
         <span class="block-tag" style="background:var(--amber-bg);color:var(--amber)">G.6</span>
         <span class="block-title">Corte por flexión alrededor del eje débil</span>
-        <span class="block-result" style="color:var(--amber)">Vdx = ${fmt(Vd_y)} kN</span>
+        <span class="block-result" style="color:var(--amber)">Vd = ${fmt(Vd_y)} kN</span>
       </div>
       <div class="block-body">
         ${stepC('Aw = bf·tf', fmt(Aw_y), 'cm²', 'G.2-2', null)}
         ${stepC('kv = 1.2 (alas)', '', '', '', null)}
         ${stepC('b/tf = '+fmt(btf), `Cv = ${fmt(Cv_y)}`, '', btf<=lim1_y?'G.2-3':btf<=lim2_y?'G.2-4':'G.2-5', null)}
-        ${govCard(Vd_y, 'kN', 'Vdx = 0.9·0.6·Fy·Aw·Cv')}
+        ${govCard(Vd_y, 'kN', 'Vd = 0.9·0.6·Fy·Aw·Cv')}
       </div>
     </div>
 
@@ -895,6 +886,15 @@ function calcular() {
           <b>${fmt(Pd_tract)} <span style="font-size:11px;font-weight:400;color:var(--muted)">kN</span></b>
         </div>
       </div>
+    </div>
+
+    <div class="resist-grid">
+      <div class="resist-card v-blue"><div class="label">Comp. axial φPn</div><div class="value">${fmt(Pd_comp)}<span class="unit">kN</span></div><div class="ref">${governs_comp}</div></div>
+      <div class="resist-card v-green"><div class="label">Tract. axial φPn</div><div class="value">${fmt(Pd_tract)}<span class="unit">kN</span></div><div class="ref">D.2 · ${Pd_tract===Pd_yield?'Fluencia gobierna':'Rotura gobierna'}</div></div>
+      <div class="resist-card v-teal"><div class="label">Flexión fuerte φMnx</div><div class="value">${fmt(Md_x)}<span class="unit">kNm</span></div><div class="ref">F.2 · ${plt_zone}</div></div>
+      <div class="resist-card v-purple"><div class="label">Flexión débil φMny</div><div class="value">${fmt(Md_y)}<span class="unit">kNm</span></div><div class="ref">F.6 · Plastificación</div></div>
+      <div class="resist-card v-amber"><div class="label">Corte por Flexión Eje Fuerte φVny</div><div class="value">${fmt(Vd_z)}<span class="unit">kN</span></div><div class="ref">G.2 · Cv=${fmt(Cv_z,2)}</div></div>
+      <div class="resist-card v-red"><div class="label">Corte por Flexión Eje Débil φVnx</div><div class="value">${fmt(Vd_y)}<span class="unit">kN</span></div><div class="ref">G.6 · Cv=${fmt(Cv_y,2)}</div></div>
     </div>
 
     <!-- H.1 Casos -->
