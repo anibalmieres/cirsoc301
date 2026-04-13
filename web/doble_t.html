@@ -845,24 +845,36 @@ function calcular() {
       </div>
     </div>
 
-    <!-- G.2 / G.6 -->
+      </div>
+    </div>
+
+    <!-- G.2 -->
     <div class="block">
       <div class="block-header">
-        <span class="block-tag" style="background:var(--amber-bg);color:var(--amber)">G.2 / G.6</span>
-        <span class="block-title">Resistencia a corte</span>
-        <span class="block-result" style="color:var(--amber)">Vdz=${fmt(Vd_z)} kN · Vdy=${fmt(Vd_y)} kN</span>
+        <span class="block-tag" style="background:var(--amber-bg);color:var(--amber)">G.2</span>
+        <span class="block-title">Corte por flexión alrededor del eje fuerte</span>
+        <span class="block-result" style="color:var(--amber)">Vdy = ${fmt(Vd_z)} kN</span>
       </div>
       <div class="block-body">
-        <div class="section-sub">Corte eje fuerte — alma (G.2)</div>
         ${stepC('Aw = d·tw', fmt(Aw_z), 'cm²', 'G.2-2', null)}
         ${stepC('kv = 5 (sin rigidizadores)', '', '', '', null)}
-        ${stepC('h/tw = '+fmt(htw), `Cv = ${fmt(Cv_z)}`, '', htw<=lim1_z?'G.2-3 (h/tw≤492√kv/Fy)':htw<=lim2_z?'G.2-4':'G.2-5', null)}
-        ${govCard(Vd_z, 'kN', 'Vdz = 0.9·0.6·Fy·Aw·Cv')}
-        <div class="section-sub" style="margin-top:12px">Corte eje débil — alas (G.6)</div>
+        ${stepC('h/tw = '+fmt(htw), `Cv = ${fmt(Cv_z)}`, '', htw<=lim1_z?'G.2-3':htw<=lim2_z?'G.2-4':'G.2-5', null)}
+        ${govCard(Vd_z, 'kN', 'Vdy = 0.9·0.6·Fy·Aw·Cv')}
+      </div>
+    </div>
+
+    <!-- G.6 -->
+    <div class="block">
+      <div class="block-header">
+        <span class="block-tag" style="background:var(--amber-bg);color:var(--amber)">G.6</span>
+        <span class="block-title">Corte por flexión alrededor del eje débil</span>
+        <span class="block-result" style="color:var(--amber)">Vdx = ${fmt(Vd_y)} kN</span>
+      </div>
+      <div class="block-body">
         ${stepC('Aw = bf·tf', fmt(Aw_y), 'cm²', 'G.2-2', null)}
         ${stepC('kv = 1.2 (alas)', '', '', '', null)}
-        ${stepC('b/tf = '+fmt(btf), `Cv = ${fmt(Cv_y)}`, '', btf<=lim1_y?'G.2-3':'btf<=lim2_y?G.2-4:G.2-5', null)}
-        ${govCard(Vd_y, 'kN', 'Vdy = 0.9·0.6·Fy·Aw·Cv')}
+        ${stepC('b/tf = '+fmt(btf), `Cv = ${fmt(Cv_y)}`, '', btf<=lim1_y?'G.2-3':btf<=lim2_y?'G.2-4':'G.2-5', null)}
+        ${govCard(Vd_y, 'kN', 'Vdx = 0.9·0.6·Fy·Aw·Cv')}
       </div>
     </div>
 

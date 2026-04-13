@@ -397,9 +397,9 @@ def flexion_eje_debil(p: PerfilDobleT, mat: Material,
 # ══════════════════════════════════════════════════════════════════════════════
 
 def corte_eje_fuerte(p: PerfilDobleT, mat: Material) -> BloqueResultado:
-    b = BloqueResultado(titulo="Corte — eje fuerte (alma)",
+    b = BloqueResultado(titulo="Corte por flexión alrededor del eje fuerte (§G.2)",
                         referencia="CIRSOC 301-2018 §G.2",
-                        simbolo="Vdy", unidad="kN")  # G.2 alma — resiste Vux
+                        simbolo="Vdy", unidad="kN")  # Vdy — compara con Vuy
     φv  = 0.9
     Aw  = p.h * p.tw
     kv  = 5.0
@@ -421,7 +421,7 @@ def corte_eje_fuerte(p: PerfilDobleT, mat: Material) -> BloqueResultado:
     Vn = 0.6 * mat.Fy * Aw * Cv * 1e-1
     Vd = φv * Vn
     b.agregar("Vn = 0.6·Fy·Aw·Cv·10⁻¹", f"0.6·{mat.Fy}·{Aw:.3f}·{Cv:.3f}·10⁻¹", Vn, "kN", None, None, "G.2-1")
-    b.agregar("Vdx = 0.9·Vn",            f"0.9·{Vn:.3f}", Vd, "kN")
+    b.agregar("Vdx = 0.9·Vn  (§G.6)",            f"0.9·{Vn:.3f}", Vd, "kN")
 
     b.valor    = Vd
     b.verifica = True
@@ -434,9 +434,9 @@ def corte_eje_fuerte(p: PerfilDobleT, mat: Material) -> BloqueResultado:
 # ══════════════════════════════════════════════════════════════════════════════
 
 def corte_eje_debil(p: PerfilDobleT, mat: Material) -> BloqueResultado:
-    b = BloqueResultado(titulo="Corte — eje débil (alas)",
+    b = BloqueResultado(titulo="Corte por flexión alrededor del eje débil (§G.6)",
                         referencia="CIRSOC 301-2018 §G.6",
-                        simbolo="Vdx", unidad="kN")  # G.6 alas — resiste Vuy
+                        simbolo="Vdx", unidad="kN")  # Vdx — compara con Vux
     φv  = 0.9
     Aw  = p.bf * p.tf
     kv  = 1.2
@@ -458,7 +458,7 @@ def corte_eje_debil(p: PerfilDobleT, mat: Material) -> BloqueResultado:
     Vn = 0.6 * mat.Fy * Aw * Cv * 1e-1
     Vd = φv * Vn
     b.agregar("Vn = 0.6·Fy·Aw·Cv·10⁻¹", f"0.6·{mat.Fy}·{Aw:.3f}·{Cv:.3f}·10⁻¹", Vn, "kN", None, None, "G.2-1")
-    b.agregar("Vdx = 0.9·Vn",            f"0.9·{Vn:.3f}", Vd, "kN")
+    b.agregar("Vdx = 0.9·Vn  (§G.6)",            f"0.9·{Vn:.3f}", Vd, "kN")
 
     b.valor    = Vd
     b.verifica = True
