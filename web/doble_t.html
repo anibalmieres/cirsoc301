@@ -725,7 +725,7 @@ function calcular() {
       <div class="case-result ${c.pass ? 'pass' : 'fail'}">
         <div class="c-title">Caso ${i+1}</div>
         <div class="c-sub">${c.desc || '—'}</div>
-        <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">${c.formula} — ${c.tipo_axial === 'comp' ? 'Compresión' : 'Tracción'} · Pu/φPn = ${fmt(c.ratio_axial,3)}</div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">${c.formula} — ${c.tipo_axial === 'comp' ? 'Compresión' : 'Tracción'} · Pu/ϕPn = ${fmt(c.ratio_axial,3)}</div>
         <div class="ratio-val" style="color:${clr}">${fmt(c.ratio_H1, 3)}</div>
         <div class="ratio-limit" style="margin-bottom:4px;">≤ 1,000 requerido</div>
         <div class="ratio-bar"><div class="ratio-fill" style="width:${barW}%;background:${clr}"></div></div>
@@ -889,12 +889,12 @@ function calcular() {
     </div>
 
     <div class="resist-grid">
-      <div class="resist-card v-blue"><div class="label">Comp. axial φPn</div><div class="value">${fmt(Pd_comp)}<span class="unit">kN</span></div><div class="ref">${governs_comp}</div></div>
-      <div class="resist-card v-green"><div class="label">Tract. axial φPn</div><div class="value">${fmt(Pd_tract)}<span class="unit">kN</span></div><div class="ref">D.2 · ${Pd_tract===Pd_yield?'Fluencia gobierna':'Rotura gobierna'}</div></div>
-      <div class="resist-card v-teal"><div class="label">Flexión fuerte φMnx</div><div class="value">${fmt(Md_x)}<span class="unit">kNm</span></div><div class="ref">F.2 · ${plt_zone}</div></div>
-      <div class="resist-card v-purple"><div class="label">Flexión débil φMny</div><div class="value">${fmt(Md_y)}<span class="unit">kNm</span></div><div class="ref">F.6 · Plastificación</div></div>
-      <div class="resist-card v-amber"><div class="label">Corte por flexión eje fuerte φVny</div><div class="value">${fmt(Vd_z)}<span class="unit">kN</span></div><div class="ref">G.2 · Cv=${fmt(Cv_z,2)}</div></div>
-      <div class="resist-card v-red"><div class="label">Corte por flexión eje débil φVnx</div><div class="value">${fmt(Vd_y)}<span class="unit">kN</span></div><div class="ref">G.6 · Cv=${fmt(Cv_y,2)}</div></div>
+      <div class="resist-card v-blue"><div class="label">Comp. axial ϕPn</div><div class="value">${fmt(Pd_comp)}<span class="unit">kN</span></div><div class="ref">${governs_comp}</div></div>
+      <div class="resist-card v-green"><div class="label">Tract. axial ϕPn</div><div class="value">${fmt(Pd_tract)}<span class="unit">kN</span></div><div class="ref">D.2 · ${Pd_tract===Pd_yield?'Fluencia gobierna':'Rotura gobierna'}</div></div>
+      <div class="resist-card v-teal"><div class="label">Flexión fuerte ϕMnx</div><div class="value">${fmt(Md_x)}<span class="unit">kNm</span></div><div class="ref">F.2 · ${plt_zone}</div></div>
+      <div class="resist-card v-purple"><div class="label">Flexión débil ϕMny</div><div class="value">${fmt(Md_y)}<span class="unit">kNm</span></div><div class="ref">F.6 · Plastificación</div></div>
+      <div class="resist-card v-amber"><div class="label">Corte por flexión eje fuerte ϕVny</div><div class="value">${fmt(Vd_z)}<span class="unit">kN</span></div><div class="ref">G.2 · Cv=${fmt(Cv_z,2)}</div></div>
+      <div class="resist-card v-red"><div class="label">Corte por flexión eje débil ϕVnx</div><div class="value">${fmt(Vd_y)}<span class="unit">kN</span></div><div class="ref">G.6 · Cv=${fmt(Cv_y,2)}</div></div>
     </div>
 
     <!-- H.1 Casos -->
@@ -906,7 +906,7 @@ function calcular() {
       </div>
       <div class="block-body">
         <div style="font-size:11px;color:var(--muted);margin-bottom:8px">
-          φPnc = ${fmt(Pd_comp)} kN · φPnt = ${fmt(Pd_tract)} kN · φMnx = ${fmt(Md_x)} kNm · φMny = ${fmt(Md_y)} kNm · φVnz = ${fmt(Vd_z)} kN · φVny = ${fmt(Vd_y)} kN
+          ϕPnc = ${fmt(Pd_comp)} kN · ϕPnt = ${fmt(Pd_tract)} kN · ϕMnx = ${fmt(Md_x)} kNm · ϕMny = ${fmt(Md_y)} kNm · ϕVnz = ${fmt(Vd_z)} kN · ϕVny = ${fmt(Vd_y)} kN
         </div>
         ${casesHTML}
       </div>
