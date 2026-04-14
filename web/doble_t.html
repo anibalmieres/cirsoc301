@@ -844,7 +844,7 @@ function calcular() {
       <div class="block-header">
         <span class="block-tag" style="background:var(--amber-bg);color:var(--amber)">G.2</span>
         <span class="block-title">Corte por flexión alrededor del eje fuerte</span>
-        <span class="block-result" style="color:var(--amber)">Vd = ${fmt(Vd_z)} kN</span>
+        <span class="block-result" style="color:var(--amber)">Vdy = ${fmt(Vd_z)} kN</span>
       </div>
       <div class="block-body">
         ${stepC('Aw = d·tw', fmt(Aw_z), 'cm²', 'G.2-2', null)}
@@ -859,7 +859,7 @@ function calcular() {
       <div class="block-header">
         <span class="block-tag" style="background:var(--amber-bg);color:var(--amber)">G.6</span>
         <span class="block-title">Corte por flexión alrededor del eje débil</span>
-        <span class="block-result" style="color:var(--amber)">Vd = ${fmt(Vd_y)} kN</span>
+        <span class="block-result" style="color:var(--amber)">Vdx = ${fmt(Vd_y)} kN</span>
       </div>
       <div class="block-body">
         ${stepC('Aw = bf·tf', fmt(Aw_y), 'cm²', 'G.2-2', null)}
