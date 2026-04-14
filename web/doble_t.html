@@ -94,7 +94,7 @@ select option { background: var(--bg3); }
 /* RESULT CARDS GRID */
 .resist-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 24px; }
 .resist-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
-.resist-card .label { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+.resist-card .label { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: none; margin-bottom: 4px; }
 .resist-card .value { font-family: var(--mono); font-size: 16px; font-weight: 500; }
 .resist-card .unit { font-size: 11px; color: var(--muted); margin-left: 2px; }
 .resist-card .ref { font-size: 10px; color: var(--dim); margin-top: 3px; }
@@ -893,8 +893,8 @@ function calcular() {
       <div class="resist-card v-green"><div class="label">Tract. axial φPn</div><div class="value">${fmt(Pd_tract)}<span class="unit">kN</span></div><div class="ref">D.2 · ${Pd_tract===Pd_yield?'Fluencia gobierna':'Rotura gobierna'}</div></div>
       <div class="resist-card v-teal"><div class="label">Flexión fuerte φMnx</div><div class="value">${fmt(Md_x)}<span class="unit">kNm</span></div><div class="ref">F.2 · ${plt_zone}</div></div>
       <div class="resist-card v-purple"><div class="label">Flexión débil φMny</div><div class="value">${fmt(Md_y)}<span class="unit">kNm</span></div><div class="ref">F.6 · Plastificación</div></div>
-      <div class="resist-card v-amber"><div class="label">Corte por Flexión Eje Fuerte φVny</div><div class="value">${fmt(Vd_z)}<span class="unit">kN</span></div><div class="ref">G.2 · Cv=${fmt(Cv_z,2)}</div></div>
-      <div class="resist-card v-red"><div class="label">Corte por Flexión Eje Débil φVnx</div><div class="value">${fmt(Vd_y)}<span class="unit">kN</span></div><div class="ref">G.6 · Cv=${fmt(Cv_y,2)}</div></div>
+      <div class="resist-card v-amber"><div class="label">Corte por flexión eje fuerte φVny</div><div class="value">${fmt(Vd_z)}<span class="unit">kN</span></div><div class="ref">G.2 · Cv=${fmt(Cv_z,2)}</div></div>
+      <div class="resist-card v-red"><div class="label">Corte por flexión eje débil φVnx</div><div class="value">${fmt(Vd_y)}<span class="unit">kN</span></div><div class="ref">G.6 · Cv=${fmt(Cv_y,2)}</div></div>
     </div>
 
     <!-- H.1 Casos -->
@@ -1051,7 +1051,7 @@ function exportarPDF() {
     +'.step-label{color:#555;min-width:160px;font-size:8px}.step-val{font-weight:600}.step-eq{color:#888;font-size:8px;margin-left:auto}'
     +'.governs{background:#e8f4fd;padding:4px 8px;font-weight:700}'
     +'.resist-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:10px}'
-    +'.resist-card{border:0.5px solid #ddd;padding:4px 6px}.resist-card .label{font-size:7px;color:#666;text-transform:uppercase}.resist-card .value{font-size:12px;font-weight:700}'
+    +'.resist-card{border:0.5px solid #ddd;padding:4px 6px}.resist-card .label{font-size:7px;color:#666;text-transform:none}.resist-card .value{font-size:12px;font-weight:700}'
     +'.v-blue .value{color:#1a5fa8}.v-green .value{color:#2d6a4f}.v-teal .value{color:#0f6e56}.v-amber .value{color:#854f0b}.v-red .value{color:#a32d2d}.v-purple .value{color:#534ab7}'
     +'.results-header{margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start}'
     +'.results-title{font-size:14px;font-weight:700}.results-subtitle{font-size:9px;color:#666}'
